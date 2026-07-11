@@ -36,7 +36,6 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        /* 頂部編輯按鈕 */
         .edit-toggle-btn {
             position: absolute;
             top: 12px;
@@ -63,7 +62,7 @@
         .page-view { display: none; }
         .page-view.active { display: block; }
 
-        /* 當進入編輯模式時，所有加上 .editable 標籤嘅文字都會有藍色虛線外框提示 */
+        /* 編輯模式時的黃色虛線外框提示 */
         body.is-editing-mode .editable {
             outline: 2px dashed #3498db !important;
             background-color: #fffdec !important;
@@ -73,7 +72,6 @@
             min-width: 50px;
         }
 
-        /* 天數分頁 Tabs */
         .day-tabs {
             display: table; width: 100%; table-layout: fixed; margin-bottom: 15px;
             background: #fff; border-radius: 10px; padding: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
@@ -87,7 +85,6 @@
         .day-content { display: none; }
         .day-content.active { display: block; }
 
-        /* 行程卡片排版 */
         .timeline-item {
             position: relative; background: var(--card-bg); border-radius: 12px;
             padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
@@ -96,17 +93,18 @@
         .timeline-item.transport { border-left-color: #3498db; background-color: #f0f7fc; }
         .timeline-item.hotel { border-left-color: #f1c40f; background-color: #fffdf3; }
         .timeline-item.food { border-left-color: #e74c3c; background-color: #fffbfb; }
+        
         .timeline-item.clickable { cursor: pointer; }
 
         .chevron-icon {
             float: right; color: var(--text-muted); font-weight: bold; font-size: 11pt; margin-left: 5px;
         }
 
-        /* 備忘錄摺疊抽屜區域 */
+        /* 備忘錄摺疊區域 */
         .collapsible-content { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed #cbd5e1; }
         .timeline-item.open .collapsible-content { display: block; }
         
-        /* 核心：如果正在編輯，強制全自動拉開所有備忘錄，方便打字 */
+        /* 編輯模式下強制全部展開備忘錄 */
         body.is-editing-mode .collapsible-content { display: block !important; }
 
         .sub-info-box {
@@ -114,7 +112,7 @@
             border-radius: 8px; padding: 12px; margin-bottom: 12px; font-size: 10pt; color: #334155;
         }
 
-        /* 📸 多圖壓縮上傳排版 */
+        /* 圖片上傳區 */
         .upload-section {
             background: #ffffff; border: 2px dashed #3498db; border-radius: 10px; padding: 15px; text-align: center; margin-top: 15px;
         }
@@ -122,7 +120,6 @@
         .btn-upload { border: none; color: white; background-color: #3498db; padding: 8px 16px; border-radius: 6px; font-size: 10pt; font-weight: bold; }
         .upload-btn-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; }
 
-        /* 手機精緻小圖畫廊 */
         .preview-gallery { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 10px; }
         .gallery-item { position: relative; width: 75px; height: 75px; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -139,7 +136,6 @@
         h2 { font-size: 14pt; margin: 15px 0 10px 0; color: var(--primary); border-bottom: 2px solid var(--border-color); padding-bottom: 5px; }
         .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
 
-        /* 底部導航攔 */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0; height: 65px;
             background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
@@ -160,6 +156,7 @@
 
     <div class="container">
         
+        <!-- PAGE 1: 每日行程 -->
         <div id="view-itinerary" class="page-view active">
             <div class="day-tabs">
                 <div class="day-tab active" onclick="switchDay(1)">D1</div>
@@ -169,14 +166,17 @@
                 <div class="day-tab" onclick="switchDay(5)">D5</div>
             </div>
 
+            <!-- D1 -->
             <div id="day-1" class="day-content active">
                 
+                <!-- ✈️ UO 848 欄目：無痛點擊拉開 -->
                 <div class="timeline-item transport clickable" id="uo848-item" onclick="toggleAccordion(event, 'uo848-item')">
                     <span class="chevron-icon" id="uo848-chevron">▶</span>
                     <span class="time-badge"><span class="editable" id="d1-t1-time">09:15 - 14:45</span></span>
                     <div class="item-title"><span class="editable" id="d1-t1-title">✈️ 香港快運 UO 848 啟程</span></div>
                     <div class="item-desc"><span class="editable" id="d1-t1-desc" style="color: #3498db; font-weight: bold;">👉 點擊此處：查看詳細交通指引及上傳相片</span></div>
                     
+                    <!-- 點擊後會彈出嘅詳細備忘錄內容 -->
                     <div class="collapsible-content" onclick="event.stopPropagation();">
                         <div class="sub-info-box">
                             <div class="editable" id="d1-t1-note1">
@@ -202,6 +202,7 @@
                             </div>
                         </div>
 
+                        <!-- 📸 相片自動壓縮上傳區 -->
                         <div class="upload-section">
                             <p style="font-size: 9.5pt; color: #7f8c8d; margin-bottom: 8px;">上傳車票/預約截圖 (自動縮細、可傳多張)：</p>
                             <div class="upload-btn-wrapper">
@@ -230,11 +231,12 @@
                 </div>
             </div>
 
+            <!-- D2-D5 -->
             <div id="day-2" class="day-content">
                 <div class="timeline-item">
                     <span class="time-badge"><span class="editable" id="d2-t1-time">09:30</span></span>
                     <div class="item-title"><span class="editable" id="d2-t1-title">⛩️ 淺草雷門 & 仲見世通</span></div>
-                    <div class="item-desc"><span class="editable" id="d2-t1-desc">早晨漫步，拍照打卡。</span></div>
+                    <div class="item-desc"><span class="editable" id="d2-t1-desc">早晨漫步，影相打卡。</span></div>
                 </div>
             </div>
             <div id="day-3" class="day-content">
@@ -260,16 +262,19 @@
             </div>
         </div>
 
+        <!-- PAGE 2: 交通住宿 -->
         <div id="view-logistics" class="page-view">
             <h2>住宿與重要交通詳情</h2>
             <div class="card"><div class="editable" id="card-hotel-info"><strong>🏠 Day 1 - Day 2: 淺草</strong><br>酒店：The Kanzashi Tokyo Asakusa<br><br><strong>🏠 Day 3 - Day 4: 伊豆</strong><br>酒店：吉祥CAREN</div></div>
         </div>
 
+        <!-- PAGE 3: 行李準備 -->
         <div id="view-packing" class="page-view">
             <h2>行前準備檢查清單</h2>
             <div class="card"><div class="editable" id="card-packing-info">護照、日圓現金、上網卡、行動電源、Suica卡。</div></div>
         </div>
 
+        <!-- PAGE 4: 預算花費 -->
         <div id="view-budget" class="page-view">
             <h2>預算估計花費</h2>
             <div class="card"><div class="editable" id="card-budget-table">總預計開支：約 ~$3,542 HKD / 每人計</div></div>
@@ -277,20 +282,20 @@
 
     </div>
 
+    <!-- 底部導航 -->
     <nav class="bottom-nav">
         <a class="nav-item active" id="nav-itinerary" onclick="showPage('itinerary')"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>每日行程</a>
         <a class="nav-item" id="nav-logistics" onclick="showPage('logistics')"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>交通住宿</a>
         <a class="nav-item" id="nav-packing" onclick="showPage('packing')"><svg viewBox="0 0 24 24"><path d="M17 6h-2V3c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v3H5c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM9 3h4v3H9V3zm10 16H5V8h14v11z"/></svg>行李準備</a>
-        <a class="nav-item" id="nav-budget" onclick="showPage('budget')"><svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>預算花費</a>
+        <a class="nav-item" id="nav-budget" onclick="showPage('budget')"><svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9-2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>預算花費</a>
     </nav>
 
     <script>
         let isEditMode = false;
         let imageList = [];
 
-        // 切換大分頁
         function showPage(pageId) {
-            if (isEditMode) return; // 編輯中鎖定，避免跳頁面
+            if (isEditMode) return;
             document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             document.getElementById('view-' + pageId).classList.add('active');
@@ -298,16 +303,15 @@
             window.scrollTo(0, 0);
         }
 
-        // 切換天數
         function switchDay(dayNum) {
-            if (isEditMode) return; 
+            if (isEditMode) return;
             document.querySelectorAll('.day-content').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
             document.getElementById('day-' + dayNum).classList.add('active');
             event.target.classList.add('active');
         }
 
-        // 正常模式點擊展開/收合備忘錄抽屜
+        // 正常模式下點擊拉開/摺疊
         function toggleAccordion(event, itemId) {
             if (isEditMode) return; 
             const item = document.getElementById(itemId);
@@ -316,7 +320,7 @@
             if (chevron) chevron.innerText = item.classList.contains('open') ? '▼' : '▶';
         }
 
-        // 核心：點擊右上角編輯/儲存
+        // 核心切換功能
         function toggleEditMode() {
             const btn = document.getElementById('edit-btn');
             const editableElements = document.querySelectorAll('.editable');
@@ -336,14 +340,13 @@
                 document.body.classList.remove('is-editing-mode');
                 editableElements.forEach(el => {
                     el.setAttribute('contenteditable', 'false');
-                    // 永久儲存修改後的文字內容
                     localStorage.setItem('final_save_' + el.id, el.innerHTML);
                 });
                 alert("🎉 所有修改已成功儲存到你的手機！");
             }
         }
 
-        // 手機相片自動極速輕量化壓縮（限高 300px）
+        // 圖片自動縮細及上傳
         function handleMultipleImages(input) {
             const files = Array.from(input.files);
             files.forEach(file => {
@@ -370,7 +373,6 @@
             });
         }
 
-        // 畫出小圖
         function saveAndRenderGallery() {
             const container = document.getElementById('gallery-container');
             container.innerHTML = '';
@@ -386,7 +388,7 @@
             try {
                 localStorage.setItem('final_gallery_data', JSON.stringify(imageList));
             } catch (e) {
-                alert("相片儲存空間已滿，請刪除部分相片。");
+                alert("儲存容量已滿，請刪除部分相片。");
             }
         }
 
@@ -396,7 +398,6 @@
             saveAndRenderGallery();
         }
 
-        // 自動加載歷史紀錄
         window.onload = function() {
             const editableElements = document.querySelectorAll('.editable');
             editableElements.forEach(el => {
