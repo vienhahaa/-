@@ -220,4 +220,196 @@
                 </div>
                 <div class="timeline-item hotel">
                     <span class="time-badge"><span class="editable" id="d1-t3-time">17:45</span></span>
-                    <div class="item-title"><span class="editable" id="d1-t3-title">🏨 The Kanzashi Tokyo Asakusa 入住
+                    <div class="item-title"><span class="editable" id="d1-t3-title">🏨 The Kanzashi Tokyo Asakusa 入住</span></div>
+                    <div class="item-desc"><span class="editable" id="d1-t3-desc">辦理 Check-in 手續及安放行李。</span></div>
+                </div>
+                <div class="timeline-item food">
+                    <span class="time-badge"><span class="editable" id="d1-t4-time">18:30 - 20:30</span></span>
+                    <div class="item-title"><span class="editable" id="d1-t4-title">🍲 淺草今半別館 (壽喜燒)</span></div>
+                    <div class="item-desc"><span class="editable" id="d1-t4-desc">品嚐頂級黑毛和牛壽喜燒。</span></div>
+                </div>
+            </div>
+
+            <div id="day-2" class="day-content">
+                <div class="timeline-item">
+                    <span class="time-badge"><span class="editable" id="d2-t1-time">09:30</span></span>
+                    <div class="item-title"><span class="editable" id="d2-t1-title">⛩️ 淺草雷門 & 仲見世通</span></div>
+                    <div class="item-desc"><span class="editable" id="d2-t1-desc">早晨漫步，拍照打卡。</span></div>
+                </div>
+            </div>
+            <div id="day-3" class="day-content">
+                <div class="timeline-item hotel">
+                    <span class="time-badge"><span class="editable" id="d3-t1-time">14:00</span></span>
+                    <div class="item-title"><span class="editable" id="d3-t1-title">♨️ 吉祥CAREN 入住</span></div>
+                    <div class="item-desc"><span class="editable" id="d3-t1-desc">享受無敵海景露天溫泉。</span></div>
+                </div>
+            </div>
+            <div id="day-4" class="day-content">
+                <div class="timeline-item">
+                    <span class="time-badge"><span class="editable" id="d4-t1-time">10:00</span></span>
+                    <div class="item-title"><span class="editable" id="d4-t1-title">⛰️ 大室山</span></div>
+                    <div class="item-desc"><span class="editable" id="d4-t1-desc">搭乘吊椅欣賞抹茶山美景。</span></div>
+                </div>
+            </div>
+            <div id="day-5" class="day-content">
+                <div class="timeline-item transport">
+                    <span class="time-badge"><span class="editable" id="d5-t1-time">19:45</span></span>
+                    <div class="item-title"><span class="editable" id="d5-t1-title">✈️ UO 647 返港</span></div>
+                    <div class="item-desc"><span class="editable" id="d5-t1-desc">完美結束行程！</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-logistics" class="page-view">
+            <h2>住宿與重要交通詳情</h2>
+            <div class="card"><div class="editable" id="card-hotel-info"><strong>🏠 Day 1 - Day 2: 淺草</strong><br>酒店：The Kanzashi Tokyo Asakusa<br><br><strong>🏠 Day 3 - Day 4: 伊豆</strong><br>酒店：吉祥CAREN</div></div>
+        </div>
+
+        <div id="view-packing" class="page-view">
+            <h2>行前準備檢查清單</h2>
+            <div class="card"><div class="editable" id="card-packing-info">護照、日圓現金、上網卡、行動電源、Suica卡。</div></div>
+        </div>
+
+        <div id="view-budget" class="page-view">
+            <h2>預算估計花費</h2>
+            <div class="card"><div class="editable" id="card-budget-table">總預計開支：約 ~$3,542 HKD / 每人計</div></div>
+        </div>
+
+    </div>
+
+    <nav class="bottom-nav">
+        <a class="nav-item active" id="nav-itinerary" onclick="showPage('itinerary')"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>每日行程</a>
+        <a class="nav-item" id="nav-logistics" onclick="showPage('logistics')"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>交通住宿</a>
+        <a class="nav-item" id="nav-packing" onclick="showPage('packing')"><svg viewBox="0 0 24 24"><path d="M17 6h-2V3c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v3H5c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM9 3h4v3H9V3zm10 16H5V8h14v11z"/></svg>行李準備</a>
+        <a class="nav-item" id="nav-budget" onclick="showPage('budget')"><svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>預算花費</a>
+    </nav>
+
+    <script>
+        let isEditMode = false;
+        let imageList = [];
+
+        // 切換大分頁
+        function showPage(pageId) {
+            if (isEditMode) return; // 編輯中鎖定，避免跳頁面
+            document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.getElementById('view-' + pageId).classList.add('active');
+            document.getElementById('nav-' + pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // 切換天數
+        function switchDay(dayNum) {
+            if (isEditMode) return; 
+            document.querySelectorAll('.day-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('day-' + dayNum).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // 正常模式點擊展開/收合備忘錄抽屜
+        function toggleAccordion(event, itemId) {
+            if (isEditMode) return; 
+            const item = document.getElementById(itemId);
+            item.classList.toggle('open');
+            const chevron = document.getElementById('uo848-chevron');
+            if (chevron) chevron.innerText = item.classList.contains('open') ? '▼' : '▶';
+        }
+
+        // 核心：點擊右上角編輯/儲存
+        function toggleEditMode() {
+            const btn = document.getElementById('edit-btn');
+            const editableElements = document.querySelectorAll('.editable');
+            
+            isEditMode = !isEditMode;
+            
+            if (isEditMode) {
+                btn.innerText = "💾 儲存修改";
+                btn.classList.add('editing');
+                document.body.classList.add('is-editing-mode');
+                editableElements.forEach(el => {
+                    el.setAttribute('contenteditable', 'true');
+                });
+            } else {
+                btn.innerText = "🔓 編輯行程";
+                btn.classList.remove('editing');
+                document.body.classList.remove('is-editing-mode');
+                editableElements.forEach(el => {
+                    el.setAttribute('contenteditable', 'false');
+                    // 永久儲存修改後的文字內容
+                    localStorage.setItem('final_save_' + el.id, el.innerHTML);
+                });
+                alert("🎉 所有修改已成功儲存到你的手機！");
+            }
+        }
+
+        // 手機相片自動極速輕量化壓縮（限高 300px）
+        function handleMultipleImages(input) {
+            const files = Array.from(input.files);
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        const targetHeight = 300;
+                        const targetWidth = (img.width / img.height) * targetHeight;
+                        
+                        canvas.width = targetWidth;
+                        canvas.height = targetHeight;
+                        ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+                        
+                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.6);
+                        imageList.push(compressedBase64);
+                        saveAndRenderGallery();
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // 畫出小圖
+        function saveAndRenderGallery() {
+            const container = document.getElementById('gallery-container');
+            container.innerHTML = '';
+            imageList.forEach((imgData, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.innerHTML = `
+                    <img src="${imgData}" onclick="window.open('${imgData}')">
+                    <button class="btn-remove" onclick="removeImage(event, ${index})">×</button>
+                `;
+                container.appendChild(item);
+            });
+            try {
+                localStorage.setItem('final_gallery_data', JSON.stringify(imageList));
+            } catch (e) {
+                alert("相片儲存空間已滿，請刪除部分相片。");
+            }
+        }
+
+        function removeImage(event, index) {
+            event.stopPropagation();
+            imageList.splice(index, 1);
+            saveAndRenderGallery();
+        }
+
+        // 自動加載歷史紀錄
+        window.onload = function() {
+            const editableElements = document.querySelectorAll('.editable');
+            editableElements.forEach(el => {
+                const savedContent = localStorage.getItem('final_save_' + el.id);
+                if (savedContent) el.innerHTML = savedContent;
+            });
+
+            const savedGallery = localStorage.getItem('final_gallery_data');
+            if (savedGallery) {
+                imageList = JSON.parse(savedGallery);
+                saveAndRenderGallery();
+            }
+        }
+    </script>
+</body>
+</html>
