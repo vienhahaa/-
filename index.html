@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>東京 & 伊豆奢華溫泉 5日4夜行程</title>
+    <title>東京 & 伊豆奢華溫泉 5日4夜行程 (可編輯自訂版)</title>
     <style>
         :root {
             --primary: #2c3e50;
@@ -30,6 +30,7 @@
             padding-bottom: 80px;
         }
 
+        /* 頂部橫幅與編輯按鈕 */
         .header-banner {
             background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
             color: white;
@@ -37,32 +38,41 @@
             text-align: center;
             border-bottom-left-radius: 20px;
             border-bottom-right-radius: 20px;
+            position: relative;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        .header-banner h1 {
-            font-size: 20pt;
-            font-weight: 700;
-            margin-bottom: 5px;
+        .edit-toggle-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid white;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 9.5pt;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .edit-toggle-btn.editing {
+            background-color: #e74c3c;
+            border-color: #e74c3c;
         }
 
-        .header-banner p {
-            font-size: 11pt;
-            opacity: 0.9;
-        }
+        .header-banner h1 { font-size: 20pt; font-weight: 700; margin-bottom: 5px; }
+        .header-banner p { font-size: 11pt; opacity: 0.9; }
 
-        .container {
-            padding: 15px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+        .container { padding: 15px; max-width: 600px; margin: 0 auto; }
+        .page-view { display: none; }
+        .page-view.active { display: block; }
 
-        .page-view {
-            display: none;
-        }
-
-        .page-view.active {
-            display: block;
+        /* 當開啟編輯模式時，可編輯的文字外框提示 */
+        [contenteditable="true"] {
+            outline: 2px dashed #3498db !important;
+            background-color: #fffdec !important;
+            padding: 2px 5px;
+            border-radius: 4px;
         }
 
         .day-tabs {
@@ -87,18 +97,9 @@
             border-radius: 7px;
         }
 
-        .day-tab.active {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .day-content {
-            display: none;
-        }
-
-        .day-content.active {
-            display: block;
-        }
+        .day-tab.active { background-color: var(--primary); color: white; }
+        .day-content { display: none; }
+        .day-content.active { display: block; }
 
         .timeline-item {
             position: relative;
@@ -110,14 +111,8 @@
             border-left: 5px solid var(--primary);
         }
 
-        .timeline-item.transport {
-            border-left-color: #3498db;
-            background-color: #f0f7fc;
-        }
-
-        .timeline-item.clickable {
-            cursor: pointer;
-        }
+        .timeline-item.transport { border-left-color: #3498db; background-color: #f0f7fc; }
+        .timeline-item.clickable { cursor: pointer; }
 
         .chevron-icon {
             float: right;
@@ -127,20 +122,9 @@
             font-size: 12pt;
         }
 
-        .timeline-item.open .chevron-icon {
-            transform: rotate(90deg);
-        }
-
-        .collapsible-content {
-            display: none;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px dashed #cbd5e1;
-        }
-
-        .timeline-item.open .collapsible-content {
-            display: block;
-        }
+        .timeline-item.open .chevron-icon { transform: rotate(90deg); }
+        .collapsible-content { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed #cbd5e1; }
+        .timeline-item.open .collapsible-content { display: block; }
 
         .sub-info-box {
             background-color: rgba(255, 255, 255, 0.9);
@@ -152,24 +136,14 @@
             color: #334155;
         }
 
-        .sub-info-box ul {
-            padding-left: 18px;
-            margin-top: 5px;
-        }
-
-        .sub-info-box li {
-            margin-bottom: 4px;
-        }
-
-        /* 圖片上傳專用樣式 */
+        /* 圖片上傳區及預覽樣式 */
         .upload-section {
             background: #ffffff;
             border: 2px dashed #3498db;
             border-radius: 10px;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             margin-top: 15px;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
         }
 
         .upload-btn-wrapper {
@@ -187,8 +161,6 @@
             border-radius: 6px;
             font-size: 10pt;
             font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .upload-btn-wrapper input[type=file] {
@@ -200,31 +172,44 @@
             cursor: pointer;
         }
 
-        .preview-container {
+        /* 縮細的多圖預覽排版 */
+        .preview-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
             margin-top: 10px;
-            text-align: center;
         }
 
-        .preview-container img {
-            max-width: 100%;
-            max-height: 300px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            display: none;
-            margin: 0 auto;
+        .gallery-item {
+            position: relative;
+            width: 80px;  /* 限制小圖寬度，適合手機觀看 */
+            height: 80px;
         }
 
-        .btn-delete-img {
-            display: none;
-            margin-top: 12px;
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .gallery-item .btn-remove {
+            position: absolute;
+            top: -5px;
+            right: -5px;
             background-color: #e74c3c;
             color: white;
             border: none;
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-size: 9pt;
-            font-weight: bold;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 8pt;
+            line-height: 18px;
+            text-align: center;
             cursor: pointer;
+            font-weight: bold;
         }
 
         .timeline-item.hotel { border-left-color: #f1c40f; background-color: #fffdf3; }
@@ -269,16 +254,15 @@
             font-size: 9pt;
             font-weight: bold;
         }
-
-        .nav-item.active { color: var(--accent); }
         .nav-item svg { display: block; margin: 0 auto 3px auto; width: 22px; height: 22px; fill: currentColor; }
     </style>
 </head>
 <body>
 
     <div class="header-banner">
-        <h1>東京 & 伊豆溫泉之旅</h1>
-        <p>📅 8月2日 - 8月6日 (5日4夜)</p>
+        <button class="edit-toggle-btn" id="edit-btn" onclick="toggleEditMode()">🔓 編輯行程</button>
+        <h1 id="txt-main-title" class="editable">東京 & 伊豆溫泉之旅</h1>
+        <p id="txt-sub-title" class="editable">📅 8月2日 - 8月6日 (5日4夜)</p>
     </div>
 
     <div class="container">
@@ -295,76 +279,66 @@
                 
                 <div class="timeline-item transport clickable" id="uo848-item" onclick="toggleAccordion(event, 'uo848-item')">
                     <span class="chevron-icon">▶</span>
-                    <span class="time-badge">09:15 - 14:45</span>
-                    <div class="item-title">✈️ 香港快運 UO 848 啟程</div>
-                    <div class="item-desc" style="color: #3498db; font-weight: bold;">👉 點擊此處：查看詳細交通指引及上傳相片</div>
+                    <span class="time-badge editable" id="d1-t1-time">09:15 - 14:45</span>
+                    <div class="item-title editable" id="d1-t1-title">✈️ 香港快運 UO 848 啟程</div>
+                    <div class="item-desc editable" id="d1-t1-desc" style="color: #3498db; font-weight: bold;">👉 點擊此處：查看詳細交通指引及上傳相片</div>
                     
                     <div class="collapsible-content" onclick="event.stopPropagation();">
-                        <div class="sub-info-box">
-                            <strong>🚉 成田機場交通備備忘：</strong><br>
+                        <div class="sub-info-box editable" id="d1-t1-note1">
+                            <strong>🚉 成田機場交通備忘：</strong><br>
                             T2直接下B1層，向右「鐵道」<br>
                             $1380日圓 /$67hkd～50mins<br>
                             每40mins開車<br>
                             1512/1552/1632/1712/1752
                         </div>
                         
-                        <div class="sub-info-box">
-                            <strong>🛣️ 路線指引：</strong>
-                            <ul>
-                                <li><strong>直達車：</strong>「往羽田機場或西馬込方向」>「淺草站」A2B出口有電梯/A4樓梯</li>
-                                <li><strong>轉車方案：</strong>「京成上野」搭到「青砥站」落車，去對面月台，轉「押上/羽田機場/西馬込」方向>「淺草站」A2B出口有電梯/A4樓梯</li>
-                            </ul>
+                        <div class="sub-info-box editable" id="d1-t1-note2">
+                            <strong>🛣️ 路線指引：</strong><br>
+                            -直達車「往羽田機場或西馬込方向」>「淺草站」A2B出口有電梯/A4樓梯<br>
+                            -轉車「京成上野」，搭到「青砥站」落車，去對面月台，轉「押上/羽田機場/西馬込」方向>「淺草站」A2B出口有電梯/A4樓梯
                         </div>
 
-                        <div class="sub-info-box">
-                            <strong>🏃‍♂️ 前往酒店（The Kanzashi Tokyo Asakusa）：</strong>
-                            <ul>
-                                <li><strong>步行（約10-12分鐘）：</strong>從都營淺草線的「淺草站」出來後，沿著淺草寺方向穿過雷門和仲見世通，酒店位於淺草寺的北側（靠近淺草花屋敷遊樂園）。</li>
-                                <li><strong>的士（約3-5分鐘）：</strong>如果你帶着大件行李不方便走石板路，建議直接在車站外攔一輛的士，車資大約是起錶價（約500-600日圓/$25hkd）。</li>
-                            </ul>
+                        <div class="sub-info-box editable" id="d1-t1-note3">
+                            <strong>🏃‍♂️ 前往酒店（The Kanzashi Tokyo Asakusa）：</strong><br>
+                            -步行（約10-12分鐘）：從都營淺草線的「淺草站」出來後，沿著淺草寺方向穿過雷門和仲見世通，酒店位於淺草寺的北側（靠近淺草花屋敷遊樂園）。<br>
+                            -的士（約3-5分鐘）：如果你帶着大件行李不方便走石板路，建議直接在車站外攔一輛的士，車資大約是起錶價（約500-600日圓/$25hkd）。
                         </div>
 
                         <div class="upload-section">
-                            <p style="font-size: 10pt; color: #7f8c8d; margin-bottom: 10px;">可以在此放入車票、預約截圖或機票相片：</p>
+                            <p style="font-size: 9.5pt; color: #7f8c8d; margin-bottom: 8px;">上傳車票/預約截圖 (自動縮細、可傳多張)：</p>
                             <div class="upload-btn-wrapper">
-                                <button class="btn-upload">📸 影相 / 上傳行程圖片</button>
-                                <input type="file" id="image-loader" accept="image/*" onchange="handleImageUpload(this)">
+                                <button class="btn-upload">📸 選擇多張相片</button>
+                                <input type="file" id="image-loader" accept="image/*" multiple onchange="handleMultipleImages(this)">
                             </div>
-                            <div class="preview-container">
-                                <img id="uploaded-img-preview" alt="行程相片預覽">
-                                <br>
-                                <button type="button" class="btn-delete-img" id="delete-btn" onclick="deleteImage()">❌ 刪除圖片</button>
-                            </div>
+                            <div class="preview-gallery" id="gallery-container"></div>
                         </div>
-
                     </div>
                 </div>
 
                 <div class="timeline-item transport">
-                    <span class="time-badge">16:06 - 17:15</span>
-                    <div class="item-title">🚆 京成電鐵 Access 特快</div>
-                    <div class="item-desc">從成田機場前往淺草站。</div>
+                    <span class="time-badge editable" id="d1-t2-time">16:06 - 17:15</span>
+                    <div class="item-title editable" id="d1-t2-title">🚆 京成電鐵 Access 特快</div>
+                    <div class="item-desc editable" id="d1-t2-desc">從成田機場前往淺草站。</div>
                 </div>
 
                 <div class="timeline-item hotel">
-                    <span class="time-badge">17:45</span>
-                    <div class="item-title">🏨 The Kanzashi Tokyo Asakusa</div>
-                    <div class="item-desc">辦理入住（東京都台東区浅草2-27-10）。</div>
-                    <a href="https://maps.google.com" class="map-btn" target="_blank">🗺️ 開啟地圖</a>
+                    <span class="time-badge editable" id="d1-t3-time">17:45</span>
+                    <div class="item-title editable" id="d1-t3-title">🏨 The Kanzashi Tokyo Asakusa</div>
+                    <div class="item-desc editable" id="d1-t3-desc">辦理入住（東京都台東区浅草2-27-10）。</div>
                 </div>
             </div>
 
             <div id="day-2" class="day-content">
-                <div class="timeline-item"><h3>⛩️ Day 2: 淺草雷門 & 澀谷購物</h3><p class="item-desc">漫步雷門、仲見世通，下晝去澀谷、原宿行街。</p></div>
+                <div class="timeline-item"><h3 class="editable" id="d2-title">⛩️ Day 2: 淺草雷門 & 澀谷購物</h3><p class="item-desc editable" id="d2-desc">漫步雷門、仲見世通，下晝去澀谷、原宿行街。</p></div>
             </div>
             <div id="day-3" class="day-content">
-                <div class="timeline-item hotel"><h3>♨️ Day 3: 東京 ➡️ 伊豆熱川溫泉</h3><p class="item-desc">搭特急踴子號直達伊豆熱川，入住豪華溫泉旅館「吉祥CAREN」。</p></div>
+                <div class="timeline-item hotel"><h3 class="editable" id="d3-title">♨️ Day 3: 東京 ➡️ 伊豆熱川溫泉</h3><p class="item-desc editable" id="d3-desc">搭特急踴子號直達伊豆熱川，入住豪華溫泉旅館「吉祥CAREN」。</p></div>
             </div>
             <div id="day-4" class="day-content">
-                <div class="timeline-item"><h3>⛰️ Day 4: 大室山踏青一日遊</h3><p class="item-desc">搭吊椅登大室山欣賞抹茶山美景，回旅館享受 Happy Hour 溫泉。</p></div>
+                <div class="timeline-item"><h3 class="editable" id="d4-title">⛰️ Day 4: 大室山踏青一日遊</h3><p class="item-desc editable" id="d4-desc">搭吊椅登大室山欣賞抹茶山美景，回旅館享受 Happy Hour 溫泉。</p></div>
             </div>
             <div id="day-5" class="day-content">
-                <div class="timeline-item transport"><h3>✈️ Day 5: 東京站一番街 ➡️ 返港</h3><p class="item-desc">回東京站買伴手禮，下晝出機場搭 UO647 飛返香港。</p></div>
+                <div class="timeline-item transport"><h3 class="editable" id="d5-title">✈️ Day 5: 東京站一番街 ➡️ 返港</h3><p class="item-desc editable" id="d5-desc">回東京站買伴手禮，下晝出機場搭 UO647 飛返香港。</p></div>
             </div>
         </div>
     </div>
@@ -372,12 +346,42 @@
     <nav class="bottom-nav">
         <a class="nav-item active">
             <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-            每日行程
+            每日行程 (互動版)
         </a>
     </nav>
 
     <script>
-        // 天數頁面切換
+        let isEditMode = false;
+        let imageList = []; // 儲存多張縮小圖嘅 Base64 數據
+
+        // 1. 切換編輯模式與儲存
+        function toggleEditMode() {
+            const btn = document.getElementById('edit-btn');
+            const editableElements = document.querySelectorAll('.editable');
+            
+            isEditMode = !isEditMode;
+            
+            if (isEditMode) {
+                // 進入編輯狀態
+                btn.innerText = "💾 儲存修改";
+                btn.classList.add('editing');
+                editableElements.forEach(el => {
+                    el.setAttribute('contenteditable', 'true');
+                });
+            } else {
+                // 退出並儲存狀態
+                btn.innerText = "🔓 編輯行程";
+                btn.classList.remove('editing');
+                editableElements.forEach(el => {
+                    el.setAttribute('contenteditable', 'false');
+                    // 將修改完嘅文字存入手機 LocalStorage
+                    localStorage.setItem('text_' + el.id, el.innerHTML);
+                });
+                alert("👍 行程已成功儲存到本機！");
+            }
+        }
+
+        // 2. 天數切換
         function switchDay(dayNum) {
             document.querySelectorAll('.day-content').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
@@ -385,61 +389,91 @@
             event.target.classList.add('active');
         }
 
-        // 點擊卡片展開備忘錄
+        // 3. 手風琴拉開
         function toggleAccordion(event, itemId) {
+            if (isEditMode) return; // 編輯模式時唔好縮埋
             const item = document.getElementById(itemId);
             item.classList.toggle('open');
-            
-            // 改變箭頭方向
             const chevron = item.querySelector('.chevron-icon');
-            if(item.classList.contains('open')) {
-                chevron.innerText = '▼';
-            } else {
-                chevron.innerText = '▶';
-            }
+            if(chevron) chevron.innerText = item.classList.contains('open') ? '▼' : '▶';
         }
 
-        // 圖片上傳及本地儲存 (LocalStorage)
-        function handleImageUpload(input) {
-            const file = input.files[0];
-            if (file) {
+        // 4. 多圖處理 + 核心自動壓縮限制大小 (Max Height 300px)
+        function handleMultipleImages(input) {
+            const files = Array.from(input.files);
+            
+            files.forEach(file => {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const base64Image = e.target.result;
-                    displayPreview(base64Image);
-                    // 儲存落手機，等下次開返都仲喺度
-                    try {
-                        localStorage.setItem('saved_ticket_pic', base64Image);
-                    } catch (error) {
-                        alert("儲存失敗：相片檔案太大，請試用截圖或較小嘅相片上傳。");
-                    }
+                    const img = new Image();
+                    img.onload = function() {
+                        // 建立畫布進行壓縮細張化
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        // 核心：固定高度為 300px，寬度按比例縮放（網頁顯示設定為適合手機嘅 80px 小方塊）
+                        const targetHeight = 300;
+                        const targetWidth = (img.width / img.height) * targetHeight;
+                        
+                        canvas.width = targetWidth;
+                        canvas.height = targetHeight;
+                        ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+                        
+                        // 轉換成輕量化 Base64
+                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                        
+                        imageList.push(compressedBase64);
+                        saveAndRenderGallery();
+                    };
+                    img.src = e.target.result;
                 };
                 reader.readAsDataURL(file);
+            });
+        }
+
+        // 5. 渲染並更新多圖畫廊
+        function saveAndRenderGallery() {
+            const container = document.getElementById('gallery-container');
+            container.innerHTML = '';
+            
+            imageList.forEach((imgData, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.innerHTML = `
+                    <img src="${imgData}" onclick="window.open('${imgData}')">
+                    <button class="btn-remove" onclick="removeImage(${index})">×</button>
+                `;
+                container.appendChild(item);
+            });
+
+            // 存入手機本地空間
+            try {
+                localStorage.setItem('uo848_multi_gallery', JSON.stringify(imageList));
+            } catch (e) {
+                alert("儲存容量超限，請刪除部分舊相片再試。");
             }
         }
 
-        // 顯示圖片預覽
-        function displayPreview(imageData) {
-            const imgElement = document.getElementById('uploaded-img-preview');
-            const deleteBtn = document.getElementById('delete-btn');
-            imgElement.src = imageData;
-            imgElement.style.display = 'block';
-            deleteBtn.style.display = 'inline-block';
+        // 6. 刪除單張相片
+        function removeImage(index) {
+            imageList.splice(index, 1);
+            saveAndRenderGallery();
         }
 
-        // 刪除圖片
-        function deleteImage() {
-            localStorage.removeItem('saved_ticket_pic');
-            document.getElementById('uploaded-img-preview').style.display = 'none';
-            document.getElementById('delete-btn').style.display = 'none';
-            document.getElementById('image-loader').value = '';
-        }
-
-        // 網頁載入時自動讀取之前儲存過嘅相
+        // 7. 網頁開機時自動讀取之前修改嘅文字同埋相片
         window.onload = function() {
-            const savedImage = localStorage.getItem('saved_ticket_pic');
-            if (savedImage) {
-                displayPreview(savedImage);
+            // 讀取文字修改
+            const editableElements = document.querySelectorAll('.editable');
+            editableElements.forEach(el => {
+                const savedText = localStorage.getItem('text_' + el.id);
+                if (savedText) el.innerHTML = savedText;
+            });
+
+            // 讀取相片
+            const savedGallery = localStorage.getItem('uo848_multi_gallery');
+            if (savedGallery) {
+                imageList = JSON.parse(savedGallery);
+                saveAndRenderGallery();
             }
         }
     </script>
