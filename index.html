@@ -5,58 +5,282 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>東京 & 伊豆奢華溫泉 5日4夜行程</title>
     <style>
-        :root { --primary: #2c3e50; --accent: #e74c3c; --bg-color: #f7f9fa; --card-bg: #ffffff; --text-dark: #2c3e50; --text-muted: #7f8c8d; --border-color: #eaeaea; }
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background-color: var(--bg-color); color: var(--text-dark); padding-bottom: 80px; }
-        .header-banner { background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); color: white; padding: 30px 20px 20px 20px; text-align: center; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
-        .header-banner h1 { font-size: 20pt; font-weight: 700; margin-bottom: 5px; }
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 65px; background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-top: 1px solid var(--border-color); display: table; width: 100%; table-layout: fixed; z-index: 1000; }
-        .nav-item { display: table-cell; text-align: center; vertical-align: middle; color: var(--text-muted); text-decoration: none; font-size: 9pt; font-weight: bold; cursor: pointer; }
-        .nav-item.active { color: var(--accent); }
-        .nav-item svg { display: block; margin: 0 auto 3px auto; width: 22px; height: 22px; fill: currentColor; }
-        .container { padding: 15px; max-width: 600px; margin: 0 auto; }
-        .page-view { display: none; }
-        .page-view.active { display: block; }
-        .day-tabs { display: table; width: 100%; table-layout: fixed; margin-bottom: 15px; background: #fff; border-radius: 10px; padding: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .day-tab { display: table-cell; text-align: center; padding: 8px 0; font-size: 10pt; font-weight: bold; color: var(--text-muted); cursor: pointer; border-radius: 7px; }
-        .day-tab.active { background-color: var(--primary); color: white; }
-        .day-content { display: none; }
-        .day-content.active { display: block; }
-        .timeline-item { position: relative; background: var(--card-bg); border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border-left: 5px solid var(--primary); }
-        .timeline-item.transport { border-left-color: #3498db; background-color: #f0f7fc; }
-        .timeline-item.clickable { cursor: pointer; }
-        .chevron-icon { float: right; transition: transform 0.3s; color: var(--text-muted); font-weight: bold; }
-        .timeline-item.open .chevron-icon { transform: rotate(90deg); }
-        .collapsible-content { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed #cbd5e1; }
-        .timeline-item.open .collapsible-content { display: block; }
-        .sub-info-box { background-color: rgba(255, 255, 255, 0.8); border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; margin-bottom: 15px; font-size: 10pt; }
-        .sub-info-box ul { padding-left: 15px; margin-top: 5px; }
-        .upload-section { background: #fff; border: 2px dashed #cbd5e1; border-radius: 8px; padding: 15px; text-align: center; margin-top: 10px; }
-        .upload-btn-wrapper { position: relative; overflow: hidden; display: inline-block; }
-        .btn-upload { border: 1px solid #cbd5e1; color: var(--primary); background-color: white; padding: 6px 12px; border-radius: 6px; font-size: 9.5pt; font-weight: bold; }
-        .upload-btn-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; }
-        .preview-container { margin-top: 10px; }
-        .preview-container img { max-width: 100%; border-radius: 6px; display: none; }
-        .btn-delete-img { display: none; margin-top: 8px; background-color: #e74c3c; color: white; border: none; padding: 4px 10px; border-radius: 4px; font-size: 8.5pt; }
+        :root {
+            --primary: #2c3e50;
+            --accent: #e74c3c;
+            --bg-color: #f7f9fa;
+            --card-bg: #ffffff;
+            --text-dark: #2c3e50;
+            --text-muted: #7f8c8d;
+            --border-color: #eaeaea;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+
+        .header-banner {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px 20px 20px 20px;
+            text-align: center;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header-banner h1 {
+            font-size: 20pt;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .header-banner p {
+            font-size: 11pt;
+            opacity: 0.9;
+        }
+
+        .container {
+            padding: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .page-view {
+            display: none;
+        }
+
+        .page-view.active {
+            display: block;
+        }
+
+        .day-tabs {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            margin-bottom: 15px;
+            background: #fff;
+            border-radius: 10px;
+            padding: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .day-tab {
+            display: table-cell;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 11pt;
+            font-weight: bold;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 7px;
+        }
+
+        .day-tab.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .day-content {
+            display: none;
+        }
+
+        .day-content.active {
+            display: block;
+        }
+
+        .timeline-item {
+            position: relative;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border-left: 5px solid var(--primary);
+        }
+
+        .timeline-item.transport {
+            border-left-color: #3498db;
+            background-color: #f0f7fc;
+        }
+
+        .timeline-item.clickable {
+            cursor: pointer;
+        }
+
+        .chevron-icon {
+            float: right;
+            transition: transform 0.3s;
+            color: var(--text-muted);
+            font-weight: bold;
+            font-size: 12pt;
+        }
+
+        .timeline-item.open .chevron-icon {
+            transform: rotate(90deg);
+        }
+
+        .collapsible-content {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #cbd5e1;
+        }
+
+        .timeline-item.open .collapsible-content {
+            display: block;
+        }
+
+        .sub-info-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            font-size: 10pt;
+            color: #334155;
+        }
+
+        .sub-info-box ul {
+            padding-left: 18px;
+            margin-top: 5px;
+        }
+
+        .sub-info-box li {
+            margin-bottom: 4px;
+        }
+
+        /* 圖片上傳專用樣式 */
+        .upload-section {
+            background: #ffffff;
+            border: 2px dashed #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 15px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .upload-btn-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .btn-upload {
+            border: 1px solid #3498db;
+            color: white;
+            background-color: #3498db;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 10pt;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .upload-btn-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .preview-container {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .preview-container img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            display: none;
+            margin: 0 auto;
+        }
+
+        .btn-delete-img {
+            display: none;
+            margin-top: 12px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 9pt;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
         .timeline-item.hotel { border-left-color: #f1c40f; background-color: #fffdf3; }
         .timeline-item.food { border-left-color: #e74c3c; }
-        .time-badge { font-size: 9pt; font-weight: bold; background: #edf2f7; padding: 3px 8px; border-radius: 20px; color: var(--primary); display: inline-block; margin-bottom: 8px; }
+        
+        .time-badge {
+            font-size: 9pt;
+            font-weight: bold;
+            background: #edf2f7;
+            padding: 3px 8px;
+            border-radius: 20px;
+            color: var(--primary);
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
         .item-title { font-size: 13pt; font-weight: bold; color: #1a202c; margin-bottom: 5px; }
         .item-desc { font-size: 10pt; color: #4a5568; }
-        .map-btn { display: inline-block; background-color: #27ae60; color: white; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-size: 9pt; font-weight: bold; margin-top: 5px; }
-        h2 { font-size: 14pt; margin: 15px 0 10px 0; color: var(--primary); border-bottom: 2px solid var(--border-color); padding-bottom: 5px; }
-        .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 10pt; }
-        th, td { padding: 10px; text-align: left; border-bottom: 1px solid var(--border-color); }
-        th { background-color: #f8f9fa; font-weight: bold; }
-        .total-row { font-weight: bold; background-color: #eaeded; }
+        .map-btn { display: inline-block; background-color: #27ae60; color: white; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-size: 9pt; font-weight: bold; margin-top: 8px; }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 65px;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-color);
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 9pt;
+            font-weight: bold;
+        }
+
+        .nav-item.active { color: var(--accent); }
+        .nav-item svg { display: block; margin: 0 auto 3px auto; width: 22px; height: 22px; fill: currentColor; }
     </style>
 </head>
 <body>
+
     <div class="header-banner">
         <h1>東京 & 伊豆溫泉之旅</h1>
-        <p>📅 8月2日 - 8月6日 (5日4夜) • 2位成人</p>
+        <p>📅 8月2日 - 8月6日 (5日4夜)</p>
     </div>
+
     <div class="container">
         <div id="view-itinerary" class="page-view active">
             <div class="day-tabs">
@@ -66,73 +290,158 @@
                 <div class="day-tab" onclick="switchDay(4)">D4</div>
                 <div class="day-tab" onclick="switchDay(5)">D5</div>
             </div>
+
             <div id="day-1" class="day-content active">
+                
                 <div class="timeline-item transport clickable" id="uo848-item" onclick="toggleAccordion(event, 'uo848-item')">
                     <span class="chevron-icon">▶</span>
                     <span class="time-badge">09:15 - 14:45</span>
                     <div class="item-title">✈️ 香港快運 UO 848 啟程</div>
-                    <div class="item-desc">從香港飛往東京成田機場 (T2)。(點擊查看詳細指引及上傳相片)</div>
+                    <div class="item-desc" style="color: #3498db; font-weight: bold;">👉 點擊此處：查看詳細交通指引及上傳相片</div>
+                    
                     <div class="collapsible-content" onclick="event.stopPropagation();">
                         <div class="sub-info-box">
-                            <strong>🚉 機場到市區交通指南：</strong><br>
+                            <strong>🚉 成田機場交通備備忘：</strong><br>
                             T2直接下B1層，向右「鐵道」<br>
                             $1380日圓 /$67hkd～50mins<br>
                             每40mins開車<br>
                             1512/1552/1632/1712/1752
                         </div>
+                        
                         <div class="sub-info-box">
-                            <strong>🛣️ 乘車路線選擇：</strong>
+                            <strong>🛣️ 路線指引：</strong>
                             <ul>
-                                <li>-直達車「往羽田機場或西馬込方向」>「淺草站」A2B出口有電梯/A4樓梯</li>
-                                <li>-轉車「京成上野」，搭到「青砥站」落車，去對面月台，轉「押上/羽田機場/西馬込」方向>「淺草站」A2B出口有電梯/A4樓梯</li>
+                                <li><strong>直達車：</strong>「往羽田機場或西馬込方向」>「淺草站」A2B出口有電梯/A4樓梯</li>
+                                <li><strong>轉車方案：</strong>「京成上野」搭到「青砥站」落車，去對面月台，轉「押上/羽田機場/西馬込」方向>「淺草站」A2B出口有電梯/A4樓梯</li>
                             </ul>
                         </div>
+
                         <div class="sub-info-box">
-                            <strong>🏃‍♂️ 前往酒店方式：</strong>
+                            <strong>🏃‍♂️ 前往酒店（The Kanzashi Tokyo Asakusa）：</strong>
                             <ul>
-                                <li>-步行（約10-12分鐘）：從都營淺草線的「淺草站」出來後，沿著淺草寺方向穿過雷門和仲見世通，酒店位於淺草寺的北側（靠近淺草花屋敷遊樂園）。</li>
-                                <li>-的士（約3-5分鐘）：如果你帶着大件行李不方便走石板路，建議直接在車站外攔一輛的士，車資大約是起錶價（約500-600日圓/$25hkd）</li>
+                                <li><strong>步行（約10-12分鐘）：</strong>從都營淺草線的「淺草站」出來後，沿著淺草寺方向穿過雷門和仲見世通，酒店位於淺草寺的北側（靠近淺草花屋敷遊樂園）。</li>
+                                <li><strong>的士（約3-5分鐘）：</strong>如果你帶着大件行李不方便走石板路，建議直接在車站外攔一輛的士，車資大約是起錶價（約500-600日圓/$25hkd）。</li>
                             </ul>
                         </div>
+
                         <div class="upload-section">
+                            <p style="font-size: 10pt; color: #7f8c8d; margin-bottom: 10px;">可以在此放入車票、預約截圖或機票相片：</p>
                             <div class="upload-btn-wrapper">
-                                <button class="btn-upload">📸 上傳車票/機票/截圖</button>
+                                <button class="btn-upload">📸 影相 / 上傳行程圖片</button>
                                 <input type="file" id="image-loader" accept="image/*" onchange="handleImageUpload(this)">
                             </div>
                             <div class="preview-container">
-                                <img id="uploaded-img-preview" alt="預覽">
+                                <img id="uploaded-img-preview" alt="行程相片預覽">
+                                <br>
                                 <button type="button" class="btn-delete-img" id="delete-btn" onclick="deleteImage()">❌ 刪除圖片</button>
                             </div>
                         </div>
+
                     </div>
                 </div>
-                <div class="timeline-item transport"><span class="time-badge">16:06 - 17:15</span><div class="item-title">🚆 京成電鐵 Access 特快</div><div class="item-desc">直達「淺草站」無需轉車。</div></div>
-                <div class="timeline-item hotel"><span class="time-badge">17:45</span><div class="item-title">🏨 The Kanzashi Tokyo Asakusa 入住</div><div class="item-desc">辦理 Check-in。</div><a href="https://maps.google.com/?q=The+Kanzashi+Tokyo+Asakusa" class="map-btn" target="_blank">🗺️ 開啟導航</a></div>
-                <div class="timeline-item food"><span class="time-badge">18:30 - 20:30</span><div class="item-title">🍲 淺草今半別館</div><div class="item-desc">頂級黑毛和牛壽喜燒。</div></div>
+
+                <div class="timeline-item transport">
+                    <span class="time-badge">16:06 - 17:15</span>
+                    <div class="item-title">🚆 京成電鐵 Access 特快</div>
+                    <div class="item-desc">從成田機場前往淺草站。</div>
+                </div>
+
+                <div class="timeline-item hotel">
+                    <span class="time-badge">17:45</span>
+                    <div class="item-title">🏨 The Kanzashi Tokyo Asakusa</div>
+                    <div class="item-desc">辦理入住（東京都台東区浅草2-27-10）。</div>
+                    <a href="https://maps.google.com" class="map-btn" target="_blank">🗺️ 開啟地圖</a>
+                </div>
             </div>
-            <div id="day-2" class="day-content"><div class="timeline-item"><span class="time-badge">09:30</span><div class="item-title">⛩️ 淺草雷門</div><div class="item-desc">早晨漫步。</div></div></div>
-            <div id="day-3" class="day-content"><div class="timeline-item hotel"><span class="time-badge">14:00+</span><div class="item-title">♨️ 吉祥CAREN 入住</div><div class="item-desc">享受無敵海景露天溫泉。</div></div></div>
-            <div id="day-4" class="day-content"><div class="timeline-item"><span class="time-badge">10:00</span><div class="item-title">⛰️ 大室山</div><div class="item-desc">搭乘吊椅俯瞰抹茶山。</div></div></div>
-            <div id="day-5" class="day-content"><div class="timeline-item transport"><span class="time-badge">19:45</span><div class="item-title">✈️ UO 647 返港</div><div class="item-desc">完美結束行程！</div></div></div>
+
+            <div id="day-2" class="day-content">
+                <div class="timeline-item"><h3>⛩️ Day 2: 淺草雷門 & 澀谷購物</h3><p class="item-desc">漫步雷門、仲見世通，下晝去澀谷、原宿行街。</p></div>
+            </div>
+            <div id="day-3" class="day-content">
+                <div class="timeline-item hotel"><h3>♨️ Day 3: 東京 ➡️ 伊豆熱川溫泉</h3><p class="item-desc">搭特急踴子號直達伊豆熱川，入住豪華溫泉旅館「吉祥CAREN」。</p></div>
+            </div>
+            <div id="day-4" class="day-content">
+                <div class="timeline-item"><h3>⛰️ Day 4: 大室山踏青一日遊</h3><p class="item-desc">搭吊椅登大室山欣賞抹茶山美景，回旅館享受 Happy Hour 溫泉。</p></div>
+            </div>
+            <div id="day-5" class="day-content">
+                <div class="timeline-item transport"><h3>✈️ Day 5: 東京站一番街 ➡️ 返港</h3><p class="item-desc">回東京站買伴手禮，下晝出機場搭 UO647 飛返香港。</p></div>
+            </div>
         </div>
-        <div id="view-logistics" class="page-view"><h2>住宿詳情</h2><div class="card"><strong>🏠 Day 1 - 2: 淺草</strong><br>The Kanzashi Tokyo Asakusa</div></div>
-        <div id="view-packing" class="page-view"><h2>行前準備</h2><div class="card">護照、日圓現金、上網卡、行動電源。</div></div>
-        <div id="view-budget" class="page-view"><h2>預算花費</h2><div class="card"><table><tr class="total-row"><td>每人總預算計</td><td>67,310 JPY</td><td>~$3,542 HKD</td></tr></table></div></div>
     </div>
+
     <nav class="bottom-nav">
-        <a class="nav-item active" id="nav-itinerary" onclick="showPage('itinerary')"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>每日行程</a>
-        <a class="nav-item" id="nav-logistics" onclick="showPage('logistics')"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>交通住宿</a>
-        <a class="nav-item" id="nav-packing" onclick="showPage('packing')"><svg viewBox="0 0 24 24"><path d="M17 6h-2V3c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v3H5c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM9 3h4v3H9V3zm10 16H5V8h14v11z"/></svg>行李準備</a>
-        <a class="nav-item" id="nav-budget" onclick="showPage('budget')"><svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>預算花費</a>
+        <a class="nav-item active">
+            <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+            每日行程
+        </a>
     </nav>
+
     <script>
-        function showPage(pId) { document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active')); document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active')); document.getElementById('view-' + pId).classList.add('active'); document.getElementById('nav-' + pId).classList.add('active'); window.scrollTo(0, 0); }
-        function switchDay(dNum) { document.querySelectorAll('.day-content').forEach(c => c.classList.remove('active')); document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active')); document.getElementById('day-' + dNum).classList.add('active'); event.target.classList.add('active'); }
-        function toggleAccordion(e, itemId) { document.getElementById(itemId).classList.toggle('open'); }
-        function handleImageUpload(input) { const file = input.files[0]; if (file) { const reader = new FileReader(); reader.onload = function(e) { const base64 = e.target.result; displayPreview(base64); localStorage.setItem('uo848_img', base64); }; reader.readAsDataURL(file); } }
-        function displayPreview(data) { const img = document.getElementById('uploaded-img-preview'); const btn = document.getElementById('delete-btn'); img.src = data; img.style.display = 'block'; btn.style.display = 'inline-block'; }
-        function deleteImage() { localStorage.removeItem('uo848_img'); document.getElementById('uploaded-img-preview').style.display = 'none'; document.getElementById('delete-btn').style.display = 'none'; document.getElementById('image-loader').value = ''; }
-        window.onload = function() { const saved = localStorage.getItem('uo848_img'); if (saved) displayPreview(saved); }
+        // 天數頁面切換
+        function switchDay(dayNum) {
+            document.querySelectorAll('.day-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('day-' + dayNum).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // 點擊卡片展開備忘錄
+        function toggleAccordion(event, itemId) {
+            const item = document.getElementById(itemId);
+            item.classList.toggle('open');
+            
+            // 改變箭頭方向
+            const chevron = item.querySelector('.chevron-icon');
+            if(item.classList.contains('open')) {
+                chevron.innerText = '▼';
+            } else {
+                chevron.innerText = '▶';
+            }
+        }
+
+        // 圖片上傳及本地儲存 (LocalStorage)
+        function handleImageUpload(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64Image = e.target.result;
+                    displayPreview(base64Image);
+                    // 儲存落手機，等下次開返都仲喺度
+                    try {
+                        localStorage.setItem('saved_ticket_pic', base64Image);
+                    } catch (error) {
+                        alert("儲存失敗：相片檔案太大，請試用截圖或較小嘅相片上傳。");
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // 顯示圖片預覽
+        function displayPreview(imageData) {
+            const imgElement = document.getElementById('uploaded-img-preview');
+            const deleteBtn = document.getElementById('delete-btn');
+            imgElement.src = imageData;
+            imgElement.style.display = 'block';
+            deleteBtn.style.display = 'inline-block';
+        }
+
+        // 刪除圖片
+        function deleteImage() {
+            localStorage.removeItem('saved_ticket_pic');
+            document.getElementById('uploaded-img-preview').style.display = 'none';
+            document.getElementById('delete-btn').style.display = 'none';
+            document.getElementById('image-loader').value = '';
+        }
+
+        // 網頁載入時自動讀取之前儲存過嘅相
+        window.onload = function() {
+            const savedImage = localStorage.getItem('saved_ticket_pic');
+            if (savedImage) {
+                displayPreview(savedImage);
+            }
+        }
     </script>
 </body>
 </html>
