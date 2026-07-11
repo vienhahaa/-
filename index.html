@@ -44,4 +44,180 @@
             background-color: rgba(255, 255, 255, 0.25);
             border: 1.5px solid white;
             color: white;
-            padding
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 10pt;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .edit-toggle-btn.editing {
+            background-color: #e74c3c;
+            border-color: #e74c3c;
+        }
+
+        .header-banner h1 { font-size: 18pt; font-weight: 700; margin-bottom: 5px; }
+        .header-banner p { font-size: 10.5pt; opacity: 0.9; }
+
+        .container { padding: 15px; max-width: 600px; margin: 0 auto; }
+        .page-view { display: none; }
+        .page-view.active { display: block; }
+
+        /* 當進入編輯模式時，所有加上 .editable 標籤嘅文字都會有藍色虛線外框提示 */
+        body.is-editing-mode .editable {
+            outline: 2px dashed #3498db !important;
+            background-color: #fffdec !important;
+            padding: 2px 4px;
+            border-radius: 4px;
+            display: inline-block;
+            min-width: 50px;
+        }
+
+        /* 天數分頁 Tabs */
+        .day-tabs {
+            display: table; width: 100%; table-layout: fixed; margin-bottom: 15px;
+            background: #fff; border-radius: 10px; padding: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .day-tab {
+            display: table-cell; text-align: center; padding: 10px 0;
+            font-size: 11pt; font-weight: bold; color: var(--text-muted); cursor: pointer; border-radius: 7px;
+        }
+        .day-tab.active { background-color: var(--primary); color: white; }
+        
+        .day-content { display: none; }
+        .day-content.active { display: block; }
+
+        /* 行程卡片排版 */
+        .timeline-item {
+            position: relative; background: var(--card-bg); border-radius: 12px;
+            padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border-left: 5px solid var(--primary);
+        }
+        .timeline-item.transport { border-left-color: #3498db; background-color: #f0f7fc; }
+        .timeline-item.hotel { border-left-color: #f1c40f; background-color: #fffdf3; }
+        .timeline-item.food { border-left-color: #e74c3c; background-color: #fffbfb; }
+        .timeline-item.clickable { cursor: pointer; }
+
+        .chevron-icon {
+            float: right; color: var(--text-muted); font-weight: bold; font-size: 11pt; margin-left: 5px;
+        }
+
+        /* 備忘錄摺疊抽屜區域 */
+        .collapsible-content { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed #cbd5e1; }
+        .timeline-item.open .collapsible-content { display: block; }
+        
+        /* 核心：如果正在編輯，強制全自動拉開所有備忘錄，方便打字 */
+        body.is-editing-mode .collapsible-content { display: block !important; }
+
+        .sub-info-box {
+            background-color: rgba(255, 255, 255, 0.9); border: 1px solid #cbd5e1;
+            border-radius: 8px; padding: 12px; margin-bottom: 12px; font-size: 10pt; color: #334155;
+        }
+
+        /* 📸 多圖壓縮上傳排版 */
+        .upload-section {
+            background: #ffffff; border: 2px dashed #3498db; border-radius: 10px; padding: 15px; text-align: center; margin-top: 15px;
+        }
+        .upload-btn-wrapper { position: relative; overflow: hidden; display: inline-block; margin-bottom: 10px; }
+        .btn-upload { border: none; color: white; background-color: #3498db; padding: 8px 16px; border-radius: 6px; font-size: 10pt; font-weight: bold; }
+        .upload-btn-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; }
+
+        /* 手機精緻小圖畫廊 */
+        .preview-gallery { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 10px; }
+        .gallery-item { position: relative; width: 75px; height: 75px; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .gallery-item .btn-remove {
+            position: absolute; top: -5px; right: -5px; background-color: #e74c3c; color: white;
+            border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 8pt;
+            line-height: 18px; text-align: center; cursor: pointer; font-weight: bold;
+        }
+
+        .time-badge { font-size: 9pt; font-weight: bold; background: #edf2f7; padding: 3px 8px; border-radius: 20px; color: var(--primary); display: inline-block; margin-bottom: 8px; }
+        .item-title { font-size: 12.5pt; font-weight: bold; color: #1a202c; margin-bottom: 5px; }
+        .item-desc { font-size: 10pt; color: #4a5568; }
+        
+        h2 { font-size: 14pt; margin: 15px 0 10px 0; color: var(--primary); border-bottom: 2px solid var(--border-color); padding-bottom: 5px; }
+        .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+
+        /* 底部導航攔 */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; height: 65px;
+            background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-color); display: table; width: 100%; table-layout: fixed; z-index: 1000;
+        }
+        .nav-item { display: table-cell; text-align: center; vertical-align: middle; color: var(--text-muted); text-decoration: none; font-size: 9pt; font-weight: bold; cursor: pointer; }
+        .nav-item.active { color: var(--accent); }
+        .nav-item svg { display: block; margin: 0 auto 3px auto; width: 22px; height: 22px; fill: currentColor; }
+    </style>
+</head>
+<body>
+
+    <div class="header-banner">
+        <button class="edit-toggle-btn" id="edit-btn" onclick="toggleEditMode()">🔓 編輯行程</button>
+        <h1 id="txt-main-title"><span class="editable" id="lbl-main-title">東京 & 伊豆溫泉之旅</span></h1>
+        <p id="txt-sub-title"><span class="editable" id="lbl-sub-title">📅 8月2日 - 8月6日 (5日4夜) • 2位成人</span></p>
+    </div>
+
+    <div class="container">
+        
+        <div id="view-itinerary" class="page-view active">
+            <div class="day-tabs">
+                <div class="day-tab active" onclick="switchDay(1)">D1</div>
+                <div class="day-tab" onclick="switchDay(2)">D2</div>
+                <div class="day-tab" onclick="switchDay(3)">D3</div>
+                <div class="day-tab" onclick="switchDay(4)">D4</div>
+                <div class="day-tab" onclick="switchDay(5)">D5</div>
+            </div>
+
+            <div id="day-1" class="day-content active">
+                
+                <div class="timeline-item transport clickable" id="uo848-item" onclick="toggleAccordion(event, 'uo848-item')">
+                    <span class="chevron-icon" id="uo848-chevron">▶</span>
+                    <span class="time-badge"><span class="editable" id="d1-t1-time">09:15 - 14:45</span></span>
+                    <div class="item-title"><span class="editable" id="d1-t1-title">✈️ 香港快運 UO 848 啟程</span></div>
+                    <div class="item-desc"><span class="editable" id="d1-t1-desc" style="color: #3498db; font-weight: bold;">👉 點擊此處：查看詳細交通指引及上傳相片</span></div>
+                    
+                    <div class="collapsible-content" onclick="event.stopPropagation();">
+                        <div class="sub-info-box">
+                            <div class="editable" id="d1-t1-note1">
+                                <strong>🚉 機場到市區交通指南：</strong><br>
+                                T2直接下B1層，向右「鐵道」<br>
+                                $1380日圓 /$67hkd～50mins<br>
+                                每40mins開車<br>
+                                1512/1552/1632/1712/1752
+                            </div>
+                        </div>
+                        <div class="sub-info-box">
+                            <div class="editable" id="d1-t1-note2">
+                                <strong>🛣️ 乘車路線選擇：</strong><br>
+                                -直達車「往羽田機場或西馬込方向」>「淺草站」A2B出口有電梯/A4樓梯<br>
+                                -轉車「京成上野」，搭到「青砥站」落車，去對面月台，轉「押上/羽田機場/西馬込」方向>「淺草站」A2B出口有電梯/A4樓梯
+                            </div>
+                        </div>
+                        <div class="sub-info-box">
+                            <div class="editable" id="d1-t1-note3">
+                                <strong>🏃‍♂️ 從淺草站前往酒店方式：</strong><br>
+                                -步行（約10-12分鐘）：從都營淺草線的「淺草站」出來後，沿著淺草寺方向穿過雷門 and 仲見世通，酒店位於淺草寺的北側（靠近淺草花屋敷遊樂園）。<br>
+                                -的士（約3-5分鐘）：如果你帶着大件行李不方便走石板路，建議直接在車站外攔一輛的士，車資大約是起錶價（約500-600日圓/$25hkd）
+                            </div>
+                        </div>
+
+                        <div class="upload-section">
+                            <p style="font-size: 9.5pt; color: #7f8c8d; margin-bottom: 8px;">上傳車票/預約截圖 (自動縮細、可傳多張)：</p>
+                            <div class="upload-btn-wrapper">
+                                <button class="btn-upload">📸 選擇多張相片</button>
+                                <input type="file" id="image-loader" accept="image/*" multiple onclick="event.stopPropagation();" onchange="handleMultipleImages(this)">
+                            </div>
+                            <div class="preview-gallery" id="gallery-container"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item transport">
+                    <span class="time-badge"><span class="editable" id="d1-t2-time">16:06 - 17:15</span></span>
+                    <div class="item-title"><span class="editable" id="d1-t2-title">🚆 京成電鐵 Access 特快</span></div>
+                    <div class="item-desc"><span class="editable" id="d1-t2-desc">直達「淺草站」無需轉車。車費約 1,310 JPY。</span></div>
+                </div>
+                <div class="timeline-item hotel">
+                    <span class="time-badge"><span class="editable" id="d1-t3-time">17:45</span></span>
+                    <div class="item-title"><span class="editable" id="d1-t3-title">🏨 The Kanzashi Tokyo Asakusa 入住
