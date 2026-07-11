@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+import json
+
+# Define the HTML template for the mobile web app with native-like UI
+html_content = """<!DOCTYPE html>
 <html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
@@ -14,9 +17,6 @@
             --text-muted: #7f8c8d;
             --border-color: #eaeaea;
             --izizu-color: #16a085;
-            --note-bg: #fff9e6; /* 備註淡黃色 */
-            --note-border: #ffe0b2;
-            --note-text: #7a5313;
         }
 
         * {
@@ -199,28 +199,24 @@
             margin-bottom: 10px;
         }
 
-        /* 新增：景點圖片樣式 */
-        .item-img {
-            width: 100%;
-            max-height: 180px;
-            object-fit: cover;
+        /* Sub-info block for custom transport details */
+        .sub-info-box {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px dashed #cbd5e1;
             border-radius: 8px;
-            margin: 5px 0 10px 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 9.5pt;
+            color: #334155;
         }
 
-        /* 新增：備註區塊樣式 */
-        .item-note {
-            background-color: var(--note-bg);
-            border: 1px solid var(--note-border);
-            border-radius: 8px;
-            padding: 8px 12px;
-            font-size: 9pt;
-            color: var(--note-text);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: flex-start;
-            gap: 6px;
+        .sub-info-box ul {
+            padding-left: 15px;
+            margin-top: 5px;
+        }
+
+        .sub-info-box li {
+            margin-bottom: 4px;
         }
 
         /* Button design for navigation maps */
@@ -311,57 +307,56 @@
                 <div class="day-tab" onclick="switchDay(5)">D5</div>
             </div>
 
-            <!-- Day 1 行程已升級（加入相片與備註） -->
             <div id="day-1" class="day-content active">
                 <div class="timeline-item transport">
-                    <span class="time-badge">15:15 落機</span>
-                    <div class="item-title">✈️ 香港快運 UO 848 抵達</div>
-                    <div class="item-desc">班機預計下午 3:15 降落成田機場 (T2)，準備辦理入境手續。</div>
-                    <div class="item-note">
-                        💡 備註：預計過關、拎行李加買車票需時約 1 至 1.5 小時。出關後跟指示行落 B1 樓層的京成電鐵車站。
-                    </div>
+                    <span class="time-badge">09:15 - 14:45</span>
+                    <div class="item-title">✈️ 香港快運 UO 848 啟程</div>
+                    <div class="item-desc">從香港飛往東京成田機場 (T2)，準備開啟精彩假期。</div>
                 </div>
                 
                 <div class="timeline-item transport">
-                    <span class="time-badge">16:30 - 17:45</span>
-                    <div class="item-title">🚆 京成電鐵 Access 特快 (アクセス特急)</div>
-                    <div class="item-desc">乘搭往「羽田空港」或「西馬込」方向的班次，直達淺草站，不需轉車。車費約 1,310 JPY。</div>
-                    <img src="https://images.unsplash.com/photo-1542640244-7e672d6cef21?w=600&auto=format&fit=crop&q=60" alt="日本電車" class="item-img">
-                    <div class="item-note">
-                        💡 備註：如果撞正往「京成上野」的車，可先上車，去到「青砥站」行落對面月台轉乘往淺草方向的列車。
+                    <span class="time-badge">16:06 - 17:15</span>
+                    <div class="item-title">🚆 京成電鐵 Access 特快</div>
+                    <div class="item-desc">
+                        車費約 1,380 JPY (~$67 HKD)，車程約 50 分鐘。每 40 分鐘一班車。<br>
+                        <strong>⏱️ 建議班次：</strong>15:12 / 15:52 / 16:32 / 17:12 / 17:52
+                    </div>
+                    <div class="sub-info-box">
+                        <strong>📍 乘車指引：</strong><br>
+                        成田機場 T2 抵達後直接落 <strong>B1 層</strong>，向右行往<strong>「鐵道」</strong>方向。<br><br>
+                        <strong>🛣️ 乘車路線方案：</strong>
+                        <ul>
+                            <li><strong>直達車：</strong>乘搭「往羽田機場」或「西馬込」方向之列車 ➡️ 直達「淺草站」。</li>
+                            <li><strong>轉車方案（若搭中往京成上野方向）：</strong>搭到<strong>「青砥站」</strong>落車，行去<strong>對面月台</strong>，轉乘「押上 / 羽田機場 / 西馬込」方向 ➡️ 「淺草站」。</li>
+                        </ul>
+                        <strong>🚪 車站出口：</strong>淺草站 <strong>A2B 出口</strong>設有電梯；<strong>A4 出口</strong>為樓梯。
                     </div>
                 </div>
-                
+
                 <div class="timeline-item hotel">
-                    <span class="time-badge">18:00</span>
+                    <span class="time-badge">17:45</span>
                     <div class="item-title">🏨 The Kanzashi Tokyo Asakusa 入住</div>
                     <div class="item-desc">辦理 Check-in 手續及安放行李。地址：東京都台東区浅草2-27-10</div>
-                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&auto=format&fit=crop&q=60" alt="酒店入住" class="item-img">
-                    <div class="item-note">
-                        💡 備註：由淺草站行過去大約 10-12 分鐘，如果行李太重，建議喺車站出面直接搭的士 (車費約 500-600 JPY) 慳力。
+                    <div class="sub-info-box" style="border-color: #f1c40f;">
+                        <strong>🏃‍♂️ 機場/車站前往酒店方式：</strong>
+                        <ul>
+                            <li><strong>🚶‍♂️ 步行（約 10-12 分鐘）：</strong>從都營淺草線「淺草站」出站後，沿著淺草寺方向穿過雷門和仲見世通。酒店位於淺草寺的北側（靠近淺草花屋敷遊樂園）。</li>
+                            <li><strong>🚕 的士（約 3-5 分鐘）：</strong>如果帶住大件行李唔方便行石板路，建議直接喺車站外攔一輛的士，車資大約係起錶價（約 500-600 JPY / ~$25 HKD）。</li>
+                        </ul>
                     </div>
-                    <a href="https://maps.google.com/?q=The+Kanzashi+Tokyo+Asakusa" class="map-btn" target="_blank">🗺️ 開啟導航</a>
+                    <a href="https://maps.google.com/?q=The+Kanzashi+Tokyo+Asakusa" class="map-btn" style="margin-top:10px;" target="_blank">🗺️ 開啟導航</a>
                 </div>
-                
+
                 <div class="timeline-item food">
-                    <span class="time-badge">18:45 - 20:45</span>
+                    <span class="time-badge">18:30 - 20:30</span>
                     <div class="item-title">🍲 淺草今半別館 (壽喜燒盛宴)</div>
-                    <div class="item-desc">品嚐頂級黑毛和牛壽喜燒，用極致的油脂香氣開啟東京之旅。</div>
-                    <img src="https://images.unsplash.com/photo-1541696490-8744a5db022b?w=600&auto=format&fit=crop&q=60" alt="壽喜燒" class="item-img">
-                    <div class="item-note">
-                        💡 備註：呢間老店非常熱門，出發前一定要提早上網預約好位置，預算每人大約 $630 HKD。
-                    </div>
+                    <div class="item-desc">品嚐頂級黑毛和牛壽喜燒，完美日式開場。預算每人 ~$630 HKD。</div>
                     <a href="https://maps.google.com/?q=淺草今半別館" class="map-btn" target="_blank">🗺️ 開啟導航</a>
                 </div>
-                
                 <div class="timeline-item">
-                    <span class="time-badge">21:00 - 22:30</span>
+                    <span class="time-badge">20:45 - 22:30</span>
                     <div class="item-title">🏮 夜遊淺草寺 & Hoppy 通居酒屋</div>
-                    <div class="item-desc">晚上的淺草寺人潮散去，燈光打在五重塔上格外震撼。隨後到旁邊的居酒屋街體驗在地微醺氣氛。</div>
-                    <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=600&auto=format&fit=crop&q=60" alt="淺草寺夜景" class="item-img">
-                    <div class="item-note">
-                        💡 備註：淺草寺夜間點燈到每晚 11:00，影完相去 Hoppy 街飲杯 Highball 食串燒非常順路。
-                    </div>
+                    <div class="item-desc">散步欣賞無人點燈的淺草寺，隨後到 Hoppy 通居酒屋一條街深度續攤。</div>
                 </div>
             </div>
 
@@ -532,13 +527,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Day 1 (機場交通+壽喜燒大餐)</td><td>16,310</td><td>~$858</td></tr>
+                        <tr><td>Day 1 (機場交通+壽喜燒大餐)</td><td>16,380</td><td>~$862</td></tr>
                         <tr><td>Day 2 (市區地鐵+逛街+燒肉)</td><td>8,000</td><td>~$421</td></tr>
                         <tr><td>Day 3 (特急踴子號+溫泉旅館)</td><td>8,500</td><td>~$447</td></tr>
                         <tr><td>Day 4 (伊豆交通+大室山+午餐)</td><td>4,500</td><td>~$237</td></tr>
                         <tr><td>Day 5 (特急回程+機場交通+手信)</td><td>10,000</td><td>~$526</td></tr>
                         <tr><td>預備金 & 藥妝購物</td><td>20,000</td><td>~$1,053</td></tr>
-                        <tr class="total-row"><td>每人總預算計</td><td>67,310 JPY</td><td>~$3,542 HKD</td></tr>
+                        <tr class="total-row"><td>每人總預算計</td><td>67,380 JPY</td><td>~$3,546 HKD</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -569,19 +564,24 @@
     </nav>
 
     <script>
+        // Tab switching logic for primary navigation
         function showPage(pageId) {
+            // Hide all pages
             const pages = document.querySelectorAll('.page-view');
             pages.forEach(p => p.classList.remove('active'));
             
+            // Remove active style from nav items
             const navItems = document.querySelectorAll('.nav-item');
             navItems.forEach(item => item.classList.remove('active'));
 
+            // Show selected page
             document.getElementById('view-' + pageId).classList.add('active');
             document.getElementById('nav-' + pageId).classList.add('active');
             
             window.scrollTo(0, 0);
         }
 
+        // Day switching logic inside Itinerary Tab
         function switchDay(dayNum) {
             const contents = document.querySelectorAll('.day-content');
             contents.forEach(c => c.classList.remove('active'));
@@ -595,3 +595,11 @@
     </script>
 </body>
 </html>
+"""
+
+# Save the web app into a file
+filename = "tokyo_izu_itinerary_app.html"
+with open(filename, "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print(f"Success: File saved as {filename}")
