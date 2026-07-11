@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>東京 & 伊豆奢華溫泉 5日4夜行程 (終極全編自訂版)</title>
+    <title>東京 & 伊豆奢華溫泉 5日4夜行程</title>
     <style>
         :root {
             --primary: #2c3e50;
@@ -15,12 +15,7 @@
             --border-color: #eaeaea;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -30,19 +25,17 @@
             padding-bottom: 90px;
         }
 
-        /* 頂部橫幅 */
         .header-banner {
             background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
             color: white;
             padding: 35px 20px 25px 20px;
             text-align: center;
+            position: relative;
             border-bottom-left-radius: 20px;
             border-bottom-right-radius: 20px;
-            position: relative;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        /* 編輯按鈕：更大更醒目 */
         .edit-toggle-btn {
             position: absolute;
             top: 12px;
@@ -56,171 +49,99 @@
             font-weight: bold;
             cursor: pointer;
             z-index: 1001;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .edit-toggle-btn.editing {
             background-color: #e74c3c;
             border-color: #e74c3c;
-            animation: pulse 1s infinite alternate;
-        }
-        @keyframes pulse {
-            from { transform: scale(1); } to { transform: scale(1.05); }
         }
 
         .header-banner h1 { font-size: 18pt; font-weight: 700; margin-bottom: 5px; }
         .header-banner p { font-size: 10.5pt; opacity: 0.9; }
 
         .container { padding: 15px; max-width: 600px; margin: 0 auto; }
-        
-        /* 網頁主要 Tab 視窗切換 */
         .page-view { display: none; }
         .page-view.active { display: block; }
 
-        /* 當開啟編輯模式時，所有加上 .editable 標籤嘅字都會有黃色虛線框提示 */
-        [contenteditable="true"] {
+        /* 編輯模式時的黃色虛線外框提示 */
+        body.is-editing-mode .editable {
             outline: 2px dashed #3498db !important;
             background-color: #fffdec !important;
-            padding: 4px;
-            border-radius: 6px;
+            padding: 2px 4px;
+            border-radius: 4px;
             display: inline-block;
-            width: 100%;
+            min-width: 50px;
         }
 
-        /* 每日行程 Day Tabs */
         .day-tabs {
-            display: table;
-            width: 100%;
-            table-layout: fixed;
-            margin-bottom: 15px;
-            background: #fff;
-            border-radius: 10px;
-            padding: 4px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: table; width: 100%; table-layout: fixed; margin-bottom: 15px;
+            background: #fff; border-radius: 10px; padding: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
-
         .day-tab {
-            display: table-cell;
-            text-align: center;
-            padding: 10px 0;
-            font-size: 11pt;
-            font-weight: bold;
-            color: var(--text-muted);
-            cursor: pointer;
-            border-radius: 7px;
+            display: table-cell; text-align: center; padding: 10px 0;
+            font-size: 11pt; font-weight: bold; color: var(--text-muted); cursor: pointer; border-radius: 7px;
         }
         .day-tab.active { background-color: var(--primary); color: white; }
         
         .day-content { display: none; }
         .day-content.active { display: block; }
 
-        /* 行程卡片基礎樣式 */
         .timeline-item {
-            position: relative;
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            position: relative; background: var(--card-bg); border-radius: 12px;
+            padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             border-left: 5px solid var(--primary);
         }
         .timeline-item.transport { border-left-color: #3498db; background-color: #f0f7fc; }
         .timeline-item.hotel { border-left-color: #f1c40f; background-color: #fffdf3; }
         .timeline-item.food { border-left-color: #e74c3c; background-color: #fffbfb; }
+        
         .timeline-item.clickable { cursor: pointer; }
 
         .chevron-icon {
-            float: right;
-            color: var(--text-muted);
-            font-weight: bold;
-            font-size: 11pt;
-            margin-left: 5px;
+            float: right; color: var(--text-muted); font-weight: bold; font-size: 11pt; margin-left: 5px;
         }
 
+        /* 備忘錄摺疊區域 */
         .collapsible-content { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed #cbd5e1; }
         .timeline-item.open .collapsible-content { display: block; }
+        
+        /* 編輯模式下強制全部展開備忘錄 */
+        body.is-editing-mode .collapsible-content { display: block !important; }
 
         .sub-info-box {
-            background-color: rgba(255, 255, 255, 0.9);
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 12px;
-            font-size: 10pt;
-            color: #334155;
+            background-color: rgba(255, 255, 255, 0.9); border: 1px solid #cbd5e1;
+            border-radius: 8px; padding: 12px; margin-bottom: 12px; font-size: 10pt; color: #334155;
         }
 
-        /* 多圖自動壓縮上傳區 */
+        /* 圖片上傳區 */
         .upload-section {
-            background: #ffffff;
-            border: 2px dashed #3498db;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            margin-top: 15px;
+            background: #ffffff; border: 2px dashed #3498db; border-radius: 10px; padding: 15px; text-align: center; margin-top: 15px;
         }
-        .upload-btn-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-        .btn-upload {
-            border: none;
-            color: white;
-            background-color: #3498db;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 10pt;
-            font-weight: bold;
-        }
-        .upload-btn-wrapper input[type=file] {
-            font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer;
-        }
+        .upload-btn-wrapper { position: relative; overflow: hidden; display: inline-block; margin-bottom: 10px; }
+        .btn-upload { border: none; color: white; background-color: #3498db; padding: 8px 16px; border-radius: 6px; font-size: 10pt; font-weight: bold; }
+        .upload-btn-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; }
 
-        /* 適合手機睇嘅精緻多圖縮圖排版 */
-        .preview-gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 10px;
-        }
-        .gallery-item {
-            position: relative;
-            width: 75px; height: 75px;
-        }
-        .gallery-item img {
-            width: 100%; height: 100%; object-fit: cover; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+        .preview-gallery { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 10px; }
+        .gallery-item { position: relative; width: 75px; height: 75px; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .gallery-item .btn-remove {
             position: absolute; top: -5px; right: -5px; background-color: #e74c3c; color: white;
             border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 8pt;
             line-height: 18px; text-align: center; cursor: pointer; font-weight: bold;
         }
 
-        .time-badge {
-            font-size: 9pt; font-weight: bold; background: #edf2f7; padding: 3px 8px;
-            border-radius: 20px; color: var(--primary); display: inline-block; margin-bottom: 8px;
-        }
+        .time-badge { font-size: 9pt; font-weight: bold; background: #edf2f7; padding: 3px 8px; border-radius: 20px; color: var(--primary); display: inline-block; margin-bottom: 8px; }
         .item-title { font-size: 12.5pt; font-weight: bold; color: #1a202c; margin-bottom: 5px; }
         .item-desc { font-size: 10pt; color: #4a5568; }
         
         h2 { font-size: 14pt; margin: 15px 0 10px 0; color: var(--primary); border-bottom: 2px solid var(--border-color); padding-bottom: 5px; }
         .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 10pt; }
-        th, td { padding: 10px; text-align: left; border-bottom: 1px solid var(--border-color); }
-        th { background-color: #f8f9fa; font-weight: bold; }
-        .total-row { font-weight: bold; background-color: #eaeded; }
 
-        /* 底部導航欄 */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0; height: 65px;
             background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
             border-top: 1px solid var(--border-color); display: table; width: 100%; table-layout: fixed; z-index: 1000;
         }
-        .nav-item {
-            display: table-cell; text-align: center; vertical-align: middle; color: var(--text-muted); text-decoration: none; font-size: 9pt; font-weight: bold; cursor: pointer;
-        }
+        .nav-item { display: table-cell; text-align: center; vertical-align: middle; color: var(--text-muted); text-decoration: none; font-size: 9pt; font-weight: bold; cursor: pointer; }
         .nav-item.active { color: var(--accent); }
         .nav-item svg { display: block; margin: 0 auto 3px auto; width: 22px; height: 22px; fill: currentColor; }
     </style>
@@ -229,12 +150,13 @@
 
     <div class="header-banner">
         <button class="edit-toggle-btn" id="edit-btn" onclick="toggleEditMode()">🔓 編輯行程</button>
-        <h1 id="txt-main-title" class="editable">東京 & 伊豆溫泉之旅</h1>
-        <p id="txt-sub-title" class="editable">📅 8月2日 - 8月6日 (5日4夜) • 2位成人</p>
+        <h1 id="txt-main-title"><span class="editable" id="lbl-main-title">東京 & 伊豆溫泉之旅</span></h1>
+        <p id="txt-sub-title"><span class="editable" id="lbl-sub-title">📅 8月2日 - 8月6日 (5日4夜) • 2位成人</span></p>
     </div>
 
     <div class="container">
         
+        <!-- PAGE 1: 每日行程 -->
         <div id="view-itinerary" class="page-view active">
             <div class="day-tabs">
                 <div class="day-tab active" onclick="switchDay(1)">D1</div>
@@ -244,37 +166,48 @@
                 <div class="day-tab" onclick="switchDay(5)">D5</div>
             </div>
 
+            <!-- D1 -->
             <div id="day-1" class="day-content active">
+                
+                <!-- ✈️ UO 848 欄目：無痛點擊拉開 -->
                 <div class="timeline-item transport clickable" id="uo848-item" onclick="toggleAccordion(event, 'uo848-item')">
-                    <span class="chevron-icon">▶</span>
-                    <span class="time-badge editable" id="d1-t1-time">09:15 - 14:45</span>
-                    <div class="item-title editable" id="d1-t1-title">✈️ 香港快運 UO 848 啟程</div>
-                    <div class="item-desc editable" id="d1-t1-desc" style="color: #3498db; font-weight: bold;">👉 點擊此處：查看詳細交通指引及上傳相片</div>
+                    <span class="chevron-icon" id="uo848-chevron">▶</span>
+                    <span class="time-badge"><span class="editable" id="d1-t1-time">09:15 - 14:45</span></span>
+                    <div class="item-title"><span class="editable" id="d1-t1-title">✈️ 香港快運 UO 848 啟程</span></div>
+                    <div class="item-desc"><span class="editable" id="d1-t1-desc" style="color: #3498db; font-weight: bold;">👉 點擊此處：查看詳細交通指引及上傳相片</span></div>
                     
+                    <!-- 點擊後會彈出嘅詳細備忘錄內容 -->
                     <div class="collapsible-content" onclick="event.stopPropagation();">
-                        <div class="sub-info-box editable" id="d1-t1-note1">
-                            <strong>🚉 機場到市區交通指南：</strong><br>
-                            T2直接下B1層，向右「鐵道」<br>
-                            $1380日圓 /$67hkd～50mins<br>
-                            每40mins開車<br>
-                            1512/1552/1632/1712/1752
+                        <div class="sub-info-box">
+                            <div class="editable" id="d1-t1-note1">
+                                <strong>🚉 機場到市區交通指南：</strong><br>
+                                T2直接下B1層，向右「鐵道」<br>
+                                $1380日圓 /$67hkd～50mins<br>
+                                每40mins開車<br>
+                                1512/1552/1632/1712/1752
+                            </div>
                         </div>
-                        <div class="sub-info-box editable" id="d1-t1-note2">
-                            <strong>🛣️ 乘車路線選擇：</strong><br>
-                            -直達車「往羽田機場或西馬込方向」>「淺草站」A2B出口有電梯/A4樓梯<br>
-                            -轉車「京成上野」，搭到「青砥站」落車，去對面月台，轉「押上/羽田機場/西馬込」方向>「淺草站」A2B出口有電梯/A4樓梯
+                        <div class="sub-info-box">
+                            <div class="editable" id="d1-t1-note2">
+                                <strong>🛣️ 乘車路線選擇：</strong><br>
+                                -直達車「往羽田機場或西馬込方向」>「淺草站」A2B出口有電梯/A4樓梯<br>
+                                -轉車「京成上野」，搭到「青砥站」落車，去對面月台，轉「押上/羽田機場/西馬込」方向>「淺草站」A2B出口有電梯/A4樓梯
+                            </div>
                         </div>
-                        <div class="sub-info-box editable" id="d1-t1-note3">
-                            <strong>🏃‍♂️ 從淺草站前往酒店方式：</strong><br>
-                            -步行（約10-12分鐘）：從都營淺草線的「淺草站」出來後，沿著淺草寺方向穿過雷門和仲見世通，酒店位於淺草寺的北側（靠近淺草花屋敷遊樂園）。<br>
-                            -的士（約3-5分鐘）：如果你帶着大件行李不方便走石板路，建議直接在車站外攔一輛的士，車資大約是起錶價（約500-600日圓/$25hkd）
+                        <div class="sub-info-box">
+                            <div class="editable" id="d1-t1-note3">
+                                <strong>🏃‍♂️ 從淺草站前往酒店方式：</strong><br>
+                                -步行（約10-12分鐘）：從都營淺草線的「淺草站」出來後，沿著淺草寺方向穿過雷門 and 仲見世通，酒店位於淺草寺的北側（靠近淺草花屋敷遊樂園）。<br>
+                                -的士（約3-5分鐘）：如果你帶着大件行李不方便走石板路，建議直接在車站外攔一輛的士，車資大約是起錶價（約500-600日圓/$25hkd）
+                            </div>
                         </div>
 
+                        <!-- 📸 相片自動壓縮上傳區 -->
                         <div class="upload-section">
                             <p style="font-size: 9.5pt; color: #7f8c8d; margin-bottom: 8px;">上傳車票/預約截圖 (自動縮細、可傳多張)：</p>
                             <div class="upload-btn-wrapper">
                                 <button class="btn-upload">📸 選擇多張相片</button>
-                                <input type="file" id="image-loader" accept="image/*" multiple onchange="handleMultipleImages(this)">
+                                <input type="file" id="image-loader" accept="image/*" multiple onclick="event.stopPropagation();" onchange="handleMultipleImages(this)">
                             </div>
                             <div class="preview-gallery" id="gallery-container"></div>
                         </div>
@@ -282,115 +215,87 @@
                 </div>
 
                 <div class="timeline-item transport">
-                    <span class="time-badge editable" id="d1-t2-time">16:06 - 17:15</span>
-                    <div class="item-title editable" id="d1-t2-title">🚆 京成電鐵 Access 特快</div>
-                    <div class="item-desc editable" id="d1-t2-desc">直達「淺草站」無需轉車。車費約 1,310 JPY (~$69 HKD)。</div>
+                    <span class="time-badge"><span class="editable" id="d1-t2-time">16:06 - 17:15</span></span>
+                    <div class="item-title"><span class="editable" id="d1-t2-title">🚆 京成電鐵 Access 特快</span></div>
+                    <div class="item-desc"><span class="editable" id="d1-t2-desc">直達「淺草站」無需轉車。車費約 1,310 JPY。</span></div>
                 </div>
                 <div class="timeline-item hotel">
-                    <span class="time-badge editable" id="d1-t3-time">17:45</span>
-                    <div class="item-title editable" id="d1-t3-title">🏨 The Kanzashi Tokyo Asakusa 入住</div>
-                    <div class="item-desc editable" id="d1-t3-desc">辦理 Check-in 手續及安放行李。地址：東京都台東区浅草2-27-10</div>
+                    <span class="time-badge"><span class="editable" id="d1-t3-time">17:45</span></span>
+                    <div class="item-title"><span class="editable" id="d1-t3-title">🏨 The Kanzashi Tokyo Asakusa 入住</span></div>
+                    <div class="item-desc"><span class="editable" id="d1-t3-desc">辦理 Check-in 手續及安放行李。</span></div>
                 </div>
                 <div class="timeline-item food">
-                    <span class="time-badge editable" id="d1-t4-time">18:30 - 20:30</span>
-                    <div class="item-title editable" id="d1-t4-title">🍲 淺草今半別館 (壽喜燒盛宴)</div>
-                    <div class="item-desc editable" id="d1-t4-desc">品嚐頂級黑毛和牛壽喜燒，完美日式開場。預算每人 ~$630 HKD。</div>
+                    <span class="time-badge"><span class="editable" id="d1-t4-time">18:30 - 20:30</span></span>
+                    <div class="item-title"><span class="editable" id="d1-t4-title">🍲 淺草今半別館 (壽喜燒)</span></div>
+                    <div class="item-desc"><span class="editable" id="d1-t4-desc">品嚐頂級黑毛和牛壽喜燒。</span></div>
                 </div>
             </div>
 
+            <!-- D2-D5 -->
             <div id="day-2" class="day-content">
                 <div class="timeline-item">
-                    <span class="time-badge editable" id="d2-t1-time">09:30 - 10:30</span>
-                    <div class="item-title editable" id="d2-t1-title">⛩️ 淺草雷門 & 仲見世通</div>
-                    <div class="item-desc editable" id="d2-t1-desc">早晨漫步，品嚐道地人形燒、拍雷門大燈籠。</div>
-                </div>
-                <div class="timeline-item">
-                    <span class="time-badge editable" id="d2-t2-time">11:10 - 14:00</span>
-                    <div class="item-title editable" id="d2-t2-title">🏙️ 澀谷潮流中心</div>
-                    <div class="item-desc editable" id="d2-t2-desc">觀看震撼的澀谷十字路口、逛 Shibuya Sky 並在市區午餐。</div>
+                    <span class="time-badge"><span class="editable" id="d2-t1-time">09:30</span></span>
+                    <div class="item-title"><span class="editable" id="d2-t1-title">⛩️ 淺草雷門 & 仲見世通</span></div>
+                    <div class="item-desc"><span class="editable" id="d2-t1-desc">早晨漫步，影相打卡。</span></div>
                 </div>
             </div>
-
             <div id="day-3" class="day-content">
-                <div class="timeline-item transport">
-                    <span class="time-badge editable" id="d3-t1-time">10:00 - 12:15</span>
-                    <div class="item-title editable" id="d3-t1-title">🚄 特急踴子號 (Odoriko)</div>
-                    <div class="item-desc editable" id="d3-t1-desc">搭乘直達特急列車，沿著海岸線舒適前往「伊豆熱川站」。</div>
-                </div>
                 <div class="timeline-item hotel">
-                    <span class="time-badge editable" id="d3-t2-time">14:00+</span>
-                    <div class="item-title editable" id="d3-t2-title">♨️ 吉祥CAREN (Kissho Caren) 入住</div>
-                    <div class="item-desc editable" id="d3-t2-desc">享受無敵海景露天溫泉與免費精緻鬆餅下午茶。</div>
+                    <span class="time-badge"><span class="editable" id="d3-t1-time">14:00</span></span>
+                    <div class="item-title"><span class="editable" id="d3-t1-title">♨️ 吉祥CAREN 入住</span></div>
+                    <div class="item-desc"><span class="editable" id="d3-t1-desc">享受無敵海景露天溫泉。</span></div>
                 </div>
             </div>
-
             <div id="day-4" class="day-content">
                 <div class="timeline-item">
-                    <span class="time-badge editable" id="d4-t1-time">10:00 - 15:00</span>
-                    <div class="item-title editable" id="d4-t1-title">⛰️ 伊豆踏青：大室山</div>
-                    <div class="item-desc editable" id="d4-t1-desc">搭乘吊椅俯瞰像抹茶山的火山口，風景極美。</div>
+                    <span class="time-badge"><span class="editable" id="d4-t1-time">10:00</span></span>
+                    <div class="item-title"><span class="editable" id="d4-t1-title">⛰️ 大室山</span></div>
+                    <div class="item-desc"><span class="editable" id="d4-t1-desc">搭乘吊椅欣賞抹茶山美景。</span></div>
                 </div>
             </div>
-
             <div id="day-5" class="day-content">
                 <div class="timeline-item transport">
-                    <span class="time-badge editable" id="d5-t1-time">19:45 - 23:20</span>
-                    <div class="item-title editable" id="d5-t1-title">✈️ 香港快運 UO 647 返港</div>
-                    <div class="item-desc editable" id="d5-t1-desc">免稅店最後補貨後飛回香港，完美結束行程！</div>
+                    <span class="time-badge"><span class="editable" id="d5-t1-time">19:45</span></span>
+                    <div class="item-title"><span class="editable" id="d5-t1-title">✈️ UO 647 返港</span></div>
+                    <div class="item-desc"><span class="editable" id="d5-t1-desc">完美結束行程！</span></div>
                 </div>
             </div>
         </div>
 
+        <!-- PAGE 2: 交通住宿 -->
         <div id="view-logistics" class="page-view">
             <h2>住宿與重要交通詳情</h2>
-            <div class="card editable" id="card-hotel-info">
-                <strong>🏠 Day 1 - Day 2: 淺草</strong><br>
-                酒店：The Kanzashi Tokyo Asakusa<br>
-                地址：東京都台東区浅草2-27-10<br><br>
-                <strong>🏠 Day 3 - Day 4: 伊豆熱川</strong><br>
-                酒店：吉祥CAREN (Kissho Caren)<br>
-                地址：静岡県賀茂郡東伊豆町奈良本1133
-            </div>
+            <div class="card"><div class="editable" id="card-hotel-info"><strong>🏠 Day 1 - Day 2: 淺草</strong><br>酒店：The Kanzashi Tokyo Asakusa<br><br><strong>🏠 Day 3 - Day 4: 伊豆</strong><br>酒店：吉祥CAREN</div></div>
         </div>
 
+        <!-- PAGE 3: 行李準備 -->
         <div id="view-packing" class="page-view">
             <h2>行前準備檢查清單</h2>
-            <div class="card editable" id="card-packing-info">
-                <h3>🗂️ 必備證件與財物</h3>
-                • 特區護照（確保有 6 個月以上有效期）<br>
-                • 日圓現金（建議兩人準備 40,000 - 50,000 JPY）<br>
-                • 信用卡 / 手機 Suica卡 / 日本數據SIM卡
-            </div>
+            <div class="card"><div class="editable" id="card-packing-info">護照、日圓現金、上網卡、行動電源、Suica卡。</div></div>
         </div>
 
+        <!-- PAGE 4: 預算花費 -->
         <div id="view-budget" class="page-view">
             <h2>預算估計花費</h2>
-            <div class="card editable" id="card-budget-table">
-                <strong>💰 每人開支預算估算：</strong><br>
-                • Day 1 交通及壽喜燒：16,310 JPY (~$858 HKD)<br>
-                • Day 2 市區行街行：8,000 JPY (~$421 HKD)<br>
-                • Day 3 踴子號車票：8,500 JPY (~$447 HKD)<br>
-                • 藥妝手信預備金：20,000 JPY (~$1,053 HKD)<br>
-                -----------------------------------<br>
-                <strong>總預計開支：約 ~$3,542 HKD / 每人計</strong>
-            </div>
+            <div class="card"><div class="editable" id="card-budget-table">總預計開支：約 ~$3,542 HKD / 每人計</div></div>
         </div>
 
     </div>
 
+    <!-- 底部導航 -->
     <nav class="bottom-nav">
         <a class="nav-item active" id="nav-itinerary" onclick="showPage('itinerary')"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>每日行程</a>
         <a class="nav-item" id="nav-logistics" onclick="showPage('logistics')"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>交通住宿</a>
         <a class="nav-item" id="nav-packing" onclick="showPage('packing')"><svg viewBox="0 0 24 24"><path d="M17 6h-2V3c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v3H5c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM9 3h4v3H9V3zm10 16H5V8h14v11z"/></svg>行李準備</a>
-        <a class="nav-item" id="nav-budget" onclick="showPage('budget')"><svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>預算花費</a>
+        <a class="nav-item" id="nav-budget" onclick="showPage('budget')"><svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9-2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>預算花費</a>
     </nav>
 
     <script>
         let isEditMode = false;
         let imageList = [];
 
-        // 主頁面分頁切換
         function showPage(pageId) {
+            if (isEditMode) return;
             document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             document.getElementById('view-' + pageId).classList.add('active');
@@ -398,24 +303,24 @@
             window.scrollTo(0, 0);
         }
 
-        // 天數切換
         function switchDay(dayNum) {
+            if (isEditMode) return;
             document.querySelectorAll('.day-content').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
             document.getElementById('day-' + dayNum).classList.add('active');
             event.target.classList.add('active');
         }
 
-        // 手風琴拉開/收合
+        // 正常模式下點擊拉開/摺疊
         function toggleAccordion(event, itemId) {
-            if (isEditMode) return; // 編輯中禁止收合，方便打字
+            if (isEditMode) return; 
             const item = document.getElementById(itemId);
             item.classList.toggle('open');
-            const chevron = item.querySelector('.chevron-icon');
-            if(chevron) chevron.innerText = item.classList.contains('open') ? '▼' : '▶';
+            const chevron = document.getElementById('uo848-chevron');
+            if (chevron) chevron.innerText = item.classList.contains('open') ? '▼' : '▶';
         }
 
-        // 全能編輯模式與儲存核心邏輯
+        // 核心切換功能
         function toggleEditMode() {
             const btn = document.getElementById('edit-btn');
             const editableElements = document.querySelectorAll('.editable');
@@ -425,22 +330,23 @@
             if (isEditMode) {
                 btn.innerText = "💾 儲存修改";
                 btn.classList.add('editing');
+                document.body.classList.add('is-editing-mode');
                 editableElements.forEach(el => {
                     el.setAttribute('contenteditable', 'true');
                 });
             } else {
                 btn.innerText = "🔓 編輯行程";
                 btn.classList.remove('editing');
+                document.body.classList.remove('is-editing-mode');
                 editableElements.forEach(el => {
                     el.setAttribute('contenteditable', 'false');
-                    // 將每一項被修改過嘅文字各自永久儲存
-                    localStorage.setItem('saved_html_' + el.id, el.innerHTML);
+                    localStorage.setItem('final_save_' + el.id, el.innerHTML);
                 });
-                alert("🎉 所有修改已儲存到你的手機！");
+                alert("🎉 所有修改已成功儲存到你的手機！");
             }
         }
 
-        // 多圖處理及畫布強制壓縮變細張（限高300px）
+        // 圖片自動縮細及上傳
         function handleMultipleImages(input) {
             const files = Array.from(input.files);
             files.forEach(file => {
@@ -450,7 +356,6 @@
                     img.onload = function() {
                         const canvas = document.createElement('canvas');
                         const ctx = canvas.getContext('2d');
-                        
                         const targetHeight = 300;
                         const targetWidth = (img.width / img.height) * targetHeight;
                         
@@ -468,42 +373,39 @@
             });
         }
 
-        // 渲染手機小圖畫廊
         function saveAndRenderGallery() {
             const container = document.getElementById('gallery-container');
             container.innerHTML = '';
-            
             imageList.forEach((imgData, index) => {
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
                 item.innerHTML = `
                     <img src="${imgData}" onclick="window.open('${imgData}')">
-                    <button class="btn-remove" onclick="removeImage(${index})">×</button>
+                    <button class="btn-remove" onclick="removeImage(event, ${index})">×</button>
                 `;
                 container.appendChild(item);
             });
-
             try {
-                localStorage.setItem('uo848_gallery_data', JSON.stringify(imageList));
+                localStorage.setItem('final_gallery_data', JSON.stringify(imageList));
             } catch (e) {
-                alert("相片儲存量已滿，請刪除部分相片再試。");
+                alert("儲存容量已滿，請刪除部分相片。");
             }
         }
 
-        function removeImage(index) {
+        function removeImage(event, index) {
+            event.stopPropagation();
             imageList.splice(index, 1);
             saveAndRenderGallery();
         }
 
-        // 開機自動讀取所有歷史修改文字與相片
         window.onload = function() {
             const editableElements = document.querySelectorAll('.editable');
             editableElements.forEach(el => {
-                const savedContent = localStorage.getItem('saved_html_' + el.id);
+                const savedContent = localStorage.getItem('final_save_' + el.id);
                 if (savedContent) el.innerHTML = savedContent;
             });
 
-            const savedGallery = localStorage.getItem('uo848_gallery_data');
+            const savedGallery = localStorage.getItem('final_gallery_data');
             if (savedGallery) {
                 imageList = JSON.parse(savedGallery);
                 saveAndRenderGallery();
