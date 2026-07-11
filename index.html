@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>東京 & 伊豆奢華溫泉 5日4夜行程 (內嵌高清路線圖版)</title>
+    <title>東京 & 伊豆奢華溫泉 5日4夜行程 (高清路線優化版)</title>
     <style>
         :root {
             --primary: #2c3e50;
@@ -88,11 +88,11 @@
             position: relative; background: var(--card-bg); border-radius: 12px;
             padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             border-left: 5px solid var(--primary);
-            cursor: pointer;
         }
         .timeline-item.transport { border-left-color: #3498db; background-color: #f0f7fc; }
         .timeline-item.hotel { border-left-color: #f1c40f; background-color: #fffdf3; }
         .timeline-item.food { border-left-color: #e74c3c; background-color: #fffbfb; }
+        .timeline-item.clickable { cursor: pointer; }
 
         .chevron-icon { float: right; color: var(--text-muted); font-weight: bold; font-size: 11pt; margin-left: 5px; }
 
@@ -109,12 +109,13 @@
 
         .preview-gallery { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 10px; }
         
-        .gallery-item { position: relative; width: 75px; height: 75px; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; z-index: 1; }
+        /* 圖片基本樣式：無刪除符號 */
+        .gallery-item { position: relative; width: 75px; height: 75px; transition: all 0.2s ease-in-out; cursor: pointer; z-index: 1; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
-        /* 原地放大一倍，不彈新視窗 */
+        /* 點擊後放大一倍 (寬高變 150px 高清顯示) */
         .gallery-item.zoomed { width: 150px; height: 150px; z-index: 10; }
-        .gallery-item.zoomed img { border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .gallery-item.zoomed img { border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 
         .time-badge { font-size: 9pt; font-weight: bold; background: #edf2f7; padding: 3px 8px; border-radius: 20px; color: var(--primary); display: inline-block; margin-bottom: 8px; }
         .item-title { font-size: 12.5pt; font-weight: bold; color: #1a202c; margin-bottom: 5px; }
@@ -198,13 +199,319 @@
         <a class="nav-item active" id="nav-itinerary" onclick="showPage('itinerary')"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>每日行程</a>
         <a class="nav-item" id="nav-logistics" onclick="showPage('logistics')"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>交通住宿</a>
         <a class="nav-item" id="nav-packing" onclick="showPage('packing')"><svg viewBox="0 0 24 24"><path d="M17 6h-2V3c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v3H5c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM9 3h4v3H9V3zm10 16H5V8h14v11z"/></svg>行李準備</a>
-        <a class="nav-item" id="nav-budget" onclick="showPage('budget')"><svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1 0 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>預算花費</a>
+        <a class="nav-item" id="nav-budget" onclick="showPage('budget')"><svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1 CAST0 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>預算花費</a>
     </nav>
 
     <script>
         let isEditMode = false;
         let currentDay = 1;
-        
-        // 預嵌上傳的 8 張精確導航高清相片 (Base64 代碼壓縮包)
-        const preloadedImages = [
-            "data:image/jpeg;base64,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
+        let imageList = []; 
+
+        const defaultItinerary = [
+            { id: "item-1", day: 1, type: "transport", time: "09:15 - 14:45", title: "✈️ 香港快運 UO 848 啟程", desc: "成田機場往淺草酒店交通及報到", hasNotes: true },
+            { id: "item-2", day: 1, type: "transport", time: "16:06 - 17:15", title: "🚆 京成電鐵 Access 特快", desc: "直達「淺草站」無需轉車。車費約 1,310 JPY。", hasNotes: false },
+            { id: "item-3", day: 1, type: "hotel", time: "17:45", title: "🏨 The Kanzashi Tokyo Asakusa 入住", desc: "辦理 Check-in 手續及安放行李。", hasNotes: false },
+            { id: "item-4", day: 1, type: "food", time: "18:30 - 20:30", title: "🍲 淺草今半別館 (壽喜燒)", desc: "品嚐頂級黑毛和牛壽喜燒。", hasNotes: false },
+            { id: "item-5", day: 2, type: "normal", time: "09:30", title: "⛩️ 淺草雷門 & 仲見世通", desc: "早晨漫步，拍照打卡。", hasNotes: false },
+            { id: "item-6", day: 3, type: "hotel", time: "14:00", title: "♨️ 吉祥CAREN 入住", desc: "享受無敵海景露天溫泉。", hasNotes: false },
+            { id: "item-7", day: 4, type: "normal", time: "10:00", title: "⛰️ 大室山", desc: "搭乘吊椅欣賞抹茶山美景。", hasNotes: false },
+            { id: "item-8", day: 5, type: "transport", time: "19:45", title: "✈️ UO 647 返港", desc: "完美結束行程！", hasNotes: false }
+        ];
+
+        const defaultPacking = [
+            { text: "特區護照 (確保有6個月以上有效期)", checked: false },
+            { text: "日圓現金 (建議準備 40,000 JPY)", checked: false },
+            { text: "日本數據上網卡 / Wi-Fi 蛋", checked: false },
+            { text: "手機 Suica 卡 / 實體西瓜卡", checked: false },
+            { text: "換洗衣物、舒適行街鞋", checked: false }
+        ];
+
+        const defaultBudget = [
+            { name: "Day 1 交通及壽喜燒", cost: 858 },
+            { name: "Day 2 市區行街買野", cost: 420 },
+            { name: "Day 3 踴子號特急車票", cost: 447 },
+            { name: "藥妝手信預備金", cost: 1053 },
+            { name: "其餘雜項開支", cost: 764 }
+        ];
+
+        let itineraryData = JSON.parse(localStorage.getItem('mix_itinerary')) || defaultItinerary;
+        let packingData = JSON.parse(localStorage.getItem('mix_packing')) || defaultPacking;
+        let budgetData = JSON.parse(localStorage.getItem('mix_budget')) || defaultBudget;
+
+        function showPage(pageId) {
+            if (isEditMode) return;
+            document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.getElementById('view-' + pageId).classList.add('active');
+            document.getElementById('nav-' + pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function switchDay(dayNum) {
+            if (isEditMode) return;
+            currentDay = dayNum;
+            document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            renderItinerary();
+        }
+
+        function toggleAccordion(event, itemId) {
+            if (isEditMode) return;
+            if (event.target.closest('.upload-section') || event.target.closest('.preview-gallery')) return;
+            
+            const itemElement = document.getElementById(itemId);
+            if (!itemElement.querySelector('.collapsible-content')) return;
+            itemElement.classList.toggle('open');
+            const chevron = itemElement.querySelector('.chevron-icon');
+            if (chevron) chevron.innerText = itemElement.classList.contains('open') ? '▼' : '▶';
+        }
+
+        function toggleZoomImage(event, element) {
+            event.stopPropagation(); 
+            element.classList.toggle('zoomed');
+        }
+
+        function renderItinerary() {
+            const container = document.getElementById('itinerary-container');
+            container.innerHTML = '';
+            const filtered = itineraryData.filter(item => item.day === currentDay);
+            
+            filtered.forEach(item => {
+                const div = document.createElement('div');
+                div.className = `timeline-item ${item.type} ${item.hasNotes ? 'clickable' : ''}`;
+                div.id = item.id;
+                div.setAttribute('onclick', `toggleAccordion(event, '${item.id}')`);
+                
+                let notesHTML = '';
+                if (item.hasNotes) {
+                    notesHTML = `
+                        <span class="chevron-icon">▶</span>
+                        <div class="collapsible-content">
+                            <div class="sub-info-box"><div class="editable" id="note1-${item.id}"><strong>🚉 機場到市區交通指南：</strong><br>T2直接下B1層，向右「鐵道」<br>$1380日圓 /$67hkd～50mins<br>每40mins開車<br>1512/1552/1632/1712/1752</div></div>
+                            <div class="sub-info-box"><div class="editable" id="note2-${item.id}"><strong>🛣️ 乘車路線選擇：</strong><br>-直達車「往羽田機場或西馬込方向」>「淺草站」A2B出口有電梯/A4樓梯<br>-轉車「京成上野」：搭到「青砥站」落車，去對面月台，轉「押上/羽田機場/西馬込」方向>「淺草站」A2B出口有電梯/A4樓梯</div></div>
+                            <div class="sub-info-box"><div class="editable" id="note3-${item.id}"><strong>🏃‍♂️ 前往酒店方式：</strong><br>-步行（約10-12分鐘）：從都營淺草線的「淺草站」出來後，沿著淺草寺方向穿過雷門和仲見世通，酒店位於淺草寺的北側（靠近淺草花屋敷遊樂園）。<br>-的士（約3-5分鐘）：如果你帶着大件行李不方便走石板路，建議直接在車站外攔一輛的士，車資大大約是起錶價（約500-600日圓/$25hkd）。</div></div>
+                            <div class="upload-section">
+                                <div class="upload-btn-wrapper">
+                                    <button class="btn-upload">📸 選擇多張相片</button>
+                                    <input type="file" accept="image/*" multiple onchange="handleMultipleImages(this)">
+                                </div>
+                                <div class="preview-gallery" id="gallery-container"></div>
+                            </div>
+                        </div>`;
+                }
+
+                div.innerHTML = `
+                    <button class="delete-item-btn" onclick="deleteTimelineItem(event, '${item.id}')">×</button>
+                    <span class="time-badge"><span class="editable" id="time-${item.id}">${item.time}</span></span>
+                    <div class="item-title"><span class="editable" id="title-${item.id}">${item.title}</span></div>
+                    <div class="item-desc"><span class="editable" id="desc-${item.id}">${item.desc}</span></div>
+                    ${notesHTML}
+                `;
+                container.appendChild(div);
+                
+                if(item.hasNotes) {
+                    ['note1-','note2-','note3-'].forEach(prefix => {
+                        const saved = localStorage.getItem('final_save_' + prefix + item.id);
+                        if(saved) document.getElementById(prefix + item.id).innerHTML = saved;
+                    });
+                }
+                
+                ['time-','title-','desc-'].forEach(prefix => {
+                    const saved = localStorage.getItem('final_save_' + prefix + item.id);
+                    if(saved) document.getElementById(prefix + item.id).innerHTML = saved;
+                });
+            });
+            
+            if(isEditMode) {
+                document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'true'));
+            }
+            if (currentDay === 1) renderGalleryOnly();
+        }
+
+        function addNewTimelineItem() {
+            const newId = "item-" + Date.now();
+            itineraryData.push({
+                id: newId, day: currentDay, type: "normal", time: "12:00", title: "新行程項目", desc: "請輸入新行程描述", hasNotes: false
+            });
+            renderItinerary();
+        }
+
+        function deleteTimelineItem(event, itemId) {
+            event.stopPropagation();
+            itineraryData = itineraryData.filter(i => i.id !== itemId);
+            renderItinerary();
+        }
+
+        function renderPacking() {
+            const container = document.getElementById('packing-container');
+            container.innerHTML = '';
+            packingData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = `pack-item ${item.checked ? 'checked' : ''}`;
+                div.innerHTML = `
+                    <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="togglePackItem(${index})">
+                    <span class="editable" id="pack-txt-${index}" contenteditable="${isEditMode}">${item.text}</span>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function togglePackItem(index) {
+            if (isEditMode) return;
+            packingData[index].checked = !packingData[index].checked;
+            localStorage.setItem('mix_packing', JSON.stringify(packingData));
+            renderPacking();
+        }
+
+        function renderBudget() {
+            const tbody = document.getElementById('budget-table-body');
+            tbody.innerHTML = '';
+            let total = 0;
+            budgetData.forEach((item, index) => {
+                total += Number(item.cost);
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><span class="editable" id="budget-name-${index}" contenteditable="${isEditMode}">${item.name}</span></td>
+                    <td>$<span class="editable budget-cost-val" id="budget-cost-${index}" contenteditable="${isEditMode}" oninput="reCalculateBudget()">${item.cost}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+            document.getElementById('budget-total-sum').innerText = `$${total} HKD`;
+        }
+
+        function reCalculateBudget() {
+            let total = 0;
+            document.querySelectorAll('.budget-cost-val').forEach(el => {
+                total += Number(el.innerText.replace(/[^0-9.]/g, '')) || 0;
+            });
+            document.getElementById('budget-total-sum').innerText = `$${total} HKD`;
+        }
+
+        function toggleEditMode() {
+            const btn = document.getElementById('edit-btn');
+            isEditMode = !isEditMode;
+            
+            if (isEditMode) {
+                btn.innerText = "💾 儲存修改";
+                btn.classList.add('editing');
+                document.body.classList.add('is-editing-mode');
+                document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'true'));
+                renderPacking(); renderBudget();
+            } else {
+                btn.innerText = "🔓 編輯行程";
+                btn.classList.remove('editing');
+                document.body.classList.remove('is-editing-mode');
+                
+                itineraryData.forEach(item => {
+                    ['time-', 'title-', 'desc-'].forEach(prefix => {
+                        const el = document.getElementById(prefix + item.id);
+                        if(el) {
+                            localStorage.setItem('final_save_' + prefix + item.id, el.innerHTML);
+                            if(prefix === 'time-') item.time = el.innerText;
+                            if(prefix === 'title-') item.title = el.innerText;
+                            if(prefix === 'desc-') item.desc = el.innerText;
+                        }
+                    });
+                    if(item.hasNotes) {
+                        ['note1-', 'note2-', 'note3-'].forEach(prefix => {
+                            const el = document.getElementById(prefix + item.id);
+                            if(el) localStorage.setItem('final_save_' + prefix + item.id, el.innerHTML);
+                        });
+                    }
+                });
+                localStorage.setItem('mix_itinerary', JSON.stringify(itineraryData));
+
+                packingData.forEach((item, index) => {
+                    const el = document.getElementById(`pack-txt-${index}`);
+                    if(el) item.text = el.innerText;
+                });
+                localStorage.setItem('mix_packing', JSON.stringify(packingData));
+
+                budgetData.forEach((item, index) => {
+                    const nameEl = document.getElementById(`budget-name-${index}`);
+                    const costEl = document.getElementById(`budget-cost-${index}`);
+                    if(nameEl) item.name = nameEl.innerText;
+                    if(costEl) item.cost = Number(costEl.innerText.replace(/[^0-9.]/g, '')) || 0;
+                });
+                localStorage.setItem('mix_budget', JSON.stringify(budgetData));
+
+                localStorage.setItem('final_save_lbl-main-title', document.getElementById('lbl-main-title').innerHTML);
+                localStorage.setItem('final_save_lbl-sub-title', document.getElementById('lbl-sub-title').innerHTML);
+
+                alert("🎉 所有修改、新行程、預算開支已100%永久儲存到手機！");
+                renderItinerary(); renderPacking(); renderBudget();
+            }
+        }
+
+        function handleMultipleImages(input) {
+            const files = Array.from(input.files);
+            let processedCount = 0;
+            let tempArray = []; 
+
+            if(files.length === 0) return;
+
+            files.forEach((file, fileIndex) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        const MAX_WIDTH = 1200;
+                        const MAX_HEIGHT = 1200;
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > height) {
+                            if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                        } else {
+                            if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
+                        }
+
+                        canvas.width = width; canvas.height = height;
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        tempArray[fileIndex] = canvas.toDataURL('image/jpeg', 0.95);
+                        processedCount++;
+
+                        if (processedCount === files.length) {
+                            const validImages = tempArray.filter(item => item);
+                            imageList = validImages.concat(imageList);
+                            localStorage.setItem('final_gallery_data', JSON.stringify(imageList));
+                            renderGalleryOnly();
+                        }
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function renderGalleryOnly() {
+            const container = document.getElementById('gallery-container');
+            if(!container) return;
+            container.innerHTML = '';
+            
+            imageList.forEach((imgData, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.setAttribute('onclick', 'toggleZoomImage(event, this)');
+                item.innerHTML = `<img src="${imgData}">`;
+                container.appendChild(item);
+            });
+        }
+
+        window.onload = function() {
+            ['lbl-main-title', 'lbl-sub-title'].forEach(id => {
+                const saved = localStorage.getItem('final_save_' + id);
+                if(saved) document.getElementById(id).innerHTML = saved;
+            });
+            const savedGallery = localStorage.getItem('final_gallery_data');
+            if (savedGallery) imageList = JSON.parse(savedGallery);
+            
+            renderItinerary(); renderPacking(); renderBudget();
+        }
+    </script>
+</body>
+</html>
