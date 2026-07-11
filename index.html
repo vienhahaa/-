@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>東京 & 伊豆奢華溫泉 5日4夜行程 (終極全功能版)</title>
+    <title>東京 & 伊豆奢華溫泉 5日4夜行程 (最新相片逆序版)</title>
     <style>
         :root {
             --primary: #2c3e50;
@@ -36,7 +36,6 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        /* 頂部編輯/儲存按鈕 */
         .edit-toggle-btn {
             position: absolute; top: 12px; right: 12px;
             background-color: rgba(255, 255, 255, 0.25); border: 1.5px solid white;
@@ -52,29 +51,29 @@
         .page-view { display: none; }
         .page-view.active { display: block; }
 
-        /* 進入編輯模式時的虛線外框提示 */
+        /* 編輯模式提示 */
         body.is-editing-mode .editable {
             outline: 2px dashed #3498db !important; background-color: #fffdec !important;
             padding: 2px 4px; border-radius: 4px; display: inline-block; min-width: 30px;
         }
 
-        /* 刪除行程按鈕 */
+        /* 刪除行程掣 */
         .delete-item-btn {
             display: none; position: absolute; top: 10px; right: 10px;
             background: #e74c3c; color: white; border: none; width: 22px; height: 22px;
-            border-radius: 50%; font-weight: bold; font-size: 10pt; line-height: 22px; text-align: center; cursor: pointer; z-index: 10;
+            border-radius: 50%; font-weight: bold; font-size: 10pt; line-height: 22px; text-align: center; cursor: pointer;
+            z-index: 10;
         }
         body.is-editing-mode .delete-item-btn { display: block; }
         body.is-editing-mode .chevron-icon { display: none; }
 
-        /* 新增行程按鈕 */
+        /* 新增行程掣 */
         .add-item-btn {
-            display: none; width: 100%; padding: 12px; background: #3498db; color: white;
-            border: none; border-radius: 8px; font-weight: bold; margin-top: 10px; margin-bottom: 20px; cursor: pointer; font-size: 11pt;
+            display: block; width: 100%; padding: 12px; background: #3498db; color: white;
+            border: none; border-radius: 8px; font-weight: bold; margin-top: 10px; margin-bottom: 20px; cursor: pointer;
+            box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
         }
-        body.is-editing-mode .add-item-btn { display: block; }
 
-        /* 天數分頁 Tabs */
         .day-tabs {
             display: table; width: 100%; table-layout: fixed; margin-bottom: 15px;
             background: #fff; border-radius: 10px; padding: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
@@ -88,12 +87,9 @@
         .day-content { display: none; }
         .day-content.active { display: block; }
 
-        /* 行程卡片排版 */
         .timeline-item {
             position: relative; background: var(--card-bg); border-radius: 12px;
             padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             border-left: 5px solid var(--primary);
         }
-        .timeline-item.transport { border-left-color: #3498db; background-color: #f0f7fc; }
-        .timeline-item.hotel { border-left-color: #f1c40f; background-color: #fffdf3; }
-        .timeline-item.food { border-left-color: #e74c3c; background-color: #fffbf
+        .timeline-item.transport { border
