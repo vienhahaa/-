@@ -252,6 +252,19 @@
         const defaultItinerary = [
             { id: "item-1", day: 1, type: "transport", time: "09:15 - 14:45", title: "✈️ 香港快運 UO 848 啟程", desc: "成田機場往淺草酒店交通及報到", note1: "<strong>🚉 機場到市區交通指南：</strong><br>T2直接下B1層，向右「鐵道」<br>$1380日圓 /$67hkd～50mins<br>每40mins開車<br>1512/1552/1632/1712/1752", note2: "<strong>🛣️ 乘車路線選擇：</strong><br>-直達車「往羽田機場或西馬込方向」>「淺草站」A2B出口有電梯/A4樓梯<br>-轉車「京成上野」：搭到「青砥站」落車，去對面月台，轉「押上/羽田機場/西馬込」方向>「淺草站」A2B出口有電梯/A4樓梯", note3: "<strong>🏃‍♂️ 前往酒店方式：</strong><br>-步行（約10-12分鐘）：從都營淺草線的「淺草站」出來後，沿著淺草寺方向穿過雷門和仲見世通，酒店位於淺草寺的北側（靠近淺草花屋敷遊樂園）。<br>-的士（約3-5分鐘）：如果你帶着大件行李不方便走石板路，建議直接在車站外攔一輛的士，車資大約是起錶價（約500-600日圓/$25hkd）。" },
             { id: "item-2", day: 1, type: "transport", time: "16:06 - 17:15", title: "🚆 京成電鐵 Access 特快", desc: "直達「淺草站」無需轉車。車費約 1,310 JPY。", note1: "點擊可自由輸入文字指南 1", note2: "點擊可自由輸入文字指南 2", note3: "點擊可自由輸入文字指南 3" },
+           // 尋找這一段：
+if (item.hasNotes) {
+ notesHTML = `
+ <span class="chevron-icon">▶</span>
+ <div class="collapsible-content">
+ <div class="sub-info-box"><div class="editable" id="note1-${item.id}"><strong>🚉 機場到市區交通指南：</strong><br>T2直接下B1層，向右「鐵道」<br>$1380日圓 /$67hkd～50mins<br>每40mins開車<br>1512/1552/1632/1712/1752</div></div>
+ 
+ <!-- 💡 在這裡插入你的圖片標籤 -->
+ <div style="margin: -2px 0 12px 0; text-align: center;">
+   <img src="https://www.keisei.co.jp/keisei/tetudou/skyliner/tc/assets/images/top/routemap_express.jpg" alt="交通路線圖" style="width: 100%; max-width: 100%; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+ </div>
+
+ <div class="sub-info-box"><div class="editable" id="note2-${item.id}"><strong>🛣️ 乘車路線選擇：</strong><br>-直達車「往羽田機場或西馬込方向」>「淺草站」A2B出口有電梯/A4樓梯...
             { id: "item-3", day: 1, type: "hotel", time: "17:45", title: "🏨 The Kanzashi Tokyo Asakusa 入住", desc: "辦理 Check-in 手續及安放行李。", note1: "點擊輸入備忘", note2: "", note3: "" },
             { id: "item-4", day: 1, type: "food", time: "18:30 - 20:30", title: "🍲 淺草今半別館 (壽喜燒)", desc: "品嚐頂級黑毛和牛壽喜燒。", note1: "", note2: "", note3: "" },
             { id: "item-5", day: 2, type: "normal", time: "09:30", title: "⛩️ 淺草雷門 & 仲見世通", desc: "早晨漫步，拍照打卡。", note1: "景點備忘錄", note2: "", note3: "" },
